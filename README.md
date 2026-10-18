@@ -38,7 +38,12 @@ Backend pour la plateforme d'apprentissage interactif **LevelUpCode**, conçu av
    - Suivi de la durée d'inscription.
    - **Rappels quotidiens par email** : alerte automatique en soirée pour préserver le streak si aucun exercice n'a été réalisé dans la journée.
 
-6. **Modèle 100% Gratuit & Soutien Participatif** :
+6. **Signalement d'Erreurs & Feedback Pédagogique** :
+   - Bouton de signalement d'erreur intégré directement dans chaque leçon et chaque quiz (coquille, bug, imprécision).
+   - **Envoi automatique d'un email instantané à l'administrateur** : notification immédiate avec l'identifiant (`id`) de la leçon ou du quiz concerné et le commentaire détaillé de l'apprenant explicitant le problème.
+   - Enregistrement et suivi des signalements en base pour audit et amélioration continue du contenu.
+
+7. **Modèle 100% Gratuit & Soutien Participatif** :
    - Accès libre et illimité à l'ensemble du catalogue de leçons et de quiz.
    - Aucune restriction de quota journalier, aucun abonnement ni paywall.
    - Financement participatif via **Buy Me a Coffee** (dons volontaires & badge cosmétique supporter).
@@ -50,17 +55,18 @@ Backend pour la plateforme d'apprentissage interactif **LevelUpCode**, conçu av
 - **API** : Google Cloud Run (Container Docker NestJS).
 - **Base de Données** : Supabase (PostgreSQL managé avec Connection Pooling PgBouncer / Supavisor).
 - **ORM** : Prisma (avec `DATABASE_URL` pour le pooling et `DIRECT_URL` pour les migrations).
-- **Planification & Emails** : Google Cloud Scheduler (déclencheur cron gratuit) + Resend / Nodemailer (envois transactionnels).
+- **Planification & Emails** : Google Cloud Scheduler (déclencheur cron gratuit) + Resend / Nodemailer (rappels quotidiens de streak & alertes automatiques d'erreurs admin).
 
 ---
 
 ## 📅 Prochaines Étapes
 
 - [ ] **Étape 1** : Initialisation du projet NestJS (`nest new` / structure TypeScript), configuration Prisma & Swagger.
-- [ ] **Étape 2** : Schéma relationnel Prisma (`schema.prisma`) & migration initiale vers Supabase + script de seed des 9 catégories.
+- [ ] **Étape 2** : Schéma relationnel Prisma (`schema.prisma` incluant les signalements) & migration initiale vers Supabase + script de seed des 9 catégories.
 - [ ] **Étape 3** : Module Auth (Email/MDP + Google + GitHub + JWT).
 - [ ] **Étape 4** : Modules Catégories, Leçons et Quiz (avec filtrage par difficulté et progression).
 - [ ] **Étape 5** : Gamification & Statistiques (calcul automatique de streak, scores par tags et XP).
-- [ ] **Étape 6** : Système de Rappel Email Quotidien (MailModule, template d'alerte streak & trigger Cloud Scheduler).
-- [ ] **Étape 7** : Module Dons & Webhook Buy Me a Coffee (attribution du badge supporter).
-- [ ] **Étape 8** : Dockerfile de production & déploiement Cloud Run.
+- [ ] **Étape 6** : Système d'Emails Transactionnels (`MailModule` : rappels de streak avec Cloud Scheduler & alertes admin de signalement d'erreurs).
+- [ ] **Étape 7** : Module de Signalement d'Erreurs (`ReportsModule` : endpoint `POST /reports`, persistance et transmission instantanée du mail à l'admin avec ID et commentaire).
+- [ ] **Étape 8** : Module Dons & Webhook Buy Me a Coffee (attribution du badge supporter).
+- [ ] **Étape 9** : Dockerfile de production & déploiement Cloud Run.
