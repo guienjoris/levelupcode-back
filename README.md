@@ -54,7 +54,7 @@ Backend pour la plateforme d'apprentissage interactif **LevelUpCode**, conçu av
 
 ---
 
-## 📅 Prochaines Étapes (Reprise Lundi)
+## 📅 Prochaines Étapes
 
 - [ ] **Étape 1** : Initialisation du projet NestJS (`nest new` / structure TypeScript), configuration Prisma & Swagger.
 - [ ] **Étape 2** : Schéma relationnel Prisma (`schema.prisma`) & migration initiale vers Supabase + script de seed des 9 catégories.
