@@ -48,6 +48,11 @@ Backend pour la plateforme d'apprentissage interactif **LevelUpCode**, conçu av
    - Aucune restriction de quota journalier, aucun abonnement ni paywall.
    - Financement participatif via **Buy Me a Coffee** (dons volontaires & badge cosmétique supporter).
 
+8. **Administration & Gestion de Contenu (CRUD Leçons & Quiz)** :
+   - Espace sécurisé réservé aux administrateurs via contrôle d'accès RBAC (`Role.ADMIN`).
+   - Requêtes complètes de **création**, **mise à jour** et **suppression** pour les leçons (markdown, ordre, difficulté).
+   - Requêtes de **création**, **mise à jour** et **suppression en cascade** pour les quiz, questions et réponses associées.
+
 ---
 
 ## 🏗️ Architecture & Infrastructure
@@ -62,11 +67,12 @@ Backend pour la plateforme d'apprentissage interactif **LevelUpCode**, conçu av
 ## 📅 Prochaines Étapes
 
 - [ ] **Étape 1** : Initialisation du projet NestJS (`nest new` / structure TypeScript), configuration Prisma & Swagger.
-- [ ] **Étape 2** : Schéma relationnel Prisma (`schema.prisma` incluant les signalements) & migration initiale vers Supabase + script de seed des 9 catégories.
-- [ ] **Étape 3** : Module Auth (Email/MDP + Google + GitHub + JWT).
-- [ ] **Étape 4** : Modules Catégories, Leçons et Quiz (avec filtrage par difficulté et progression).
-- [ ] **Étape 5** : Gamification & Statistiques (calcul automatique de streak, scores par tags et XP).
-- [ ] **Étape 6** : Système d'Emails Transactionnels (`MailModule` : rappels de streak avec Cloud Scheduler & alertes admin de signalement d'erreurs).
-- [ ] **Étape 7** : Module de Signalement d'Erreurs (`ReportsModule` : endpoint `POST /reports`, persistance et transmission instantanée du mail à l'admin avec ID et commentaire).
-- [ ] **Étape 8** : Module Dons & Webhook Buy Me a Coffee (attribution du badge supporter).
-- [ ] **Étape 9** : Dockerfile de production & déploiement Cloud Run.
+- [ ] **Étape 2** : Schéma relationnel Prisma (`schema.prisma` avec rôles `USER`/`ADMIN`, signalements, cascade) & migration vers Supabase + script de seed.
+- [ ] **Étape 3** : Module Auth (Email/MDP + Google + GitHub + JWT) & Guards RBAC.
+- [ ] **Étape 4** : Modules Catégories, Leçons et Quiz publics (consultation, filtrage et validation de progression).
+- [ ] **Étape 5** : Module Administration CRUD (Création, modification et suppression de leçons et quiz pour l'administrateur).
+- [ ] **Étape 6** : Gamification & Statistiques (calcul automatique de streak, scores par tags et XP).
+- [ ] **Étape 7** : Système d'Emails Transactionnels (`MailModule` : rappels de streak avec Cloud Scheduler & alertes admin de signalement d'erreurs).
+- [ ] **Étape 8** : Module de Signalement d'Erreurs (`ReportsModule` : endpoint `POST /reports`, persistance et transmission instantanée du mail à l'admin avec ID et commentaire).
+- [ ] **Étape 9** : Module Dons & Webhook Buy Me a Coffee (attribution du badge supporter).
+- [ ] **Étape 10** : Dockerfile de production & déploiement Cloud Run.
