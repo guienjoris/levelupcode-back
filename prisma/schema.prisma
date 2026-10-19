@@ -1,0 +1,232 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum AuthProvider {
+  LOCAL
+  GOOGLE
+  GITHUB
+}
+
+enum Difficulty {
+  NOVICE
+  INTERMEDIAIRE
+  SENIOR
+}
+
+enum ReportType {
+  LESSON
+  QUIZ
+}
+
+enum ReportStatus {
+  PENDING
+  RESOLVED
+  DISMISSED
+}
+
+model User {
+  id                      String         @id @default(uuid())
+  email                   String         @unique
+  passwordHash            String?
+  name                    String?
+  avatarUrl               String?
+  provider                AuthProvider   @default(LOCAL)
+  role                    Role           @default(USER)
+  isSupporter             Boolean        @default(false)
+  supporterSince          DateTime?
+  emailDailyReminder      Boolean        @default(true)
+  lastReminderEmailSentAt DateTime?
+  createdAt               DateTime       @default(now())
+  updatedAt               DateTime       @updatedAt
+
+  streak                  UserStreak?
+  donations               Donation[]
+  reports                 ContentReport[]
+  progress                UserProgress[]
+  scores                  UserScore[]
+
+  @@index([role])
+}
+
+model UserStreak {
+  id             String    @id @default(uuid())
+  userId         String    @unique
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  currentStreak  Int       @default(0)
+  longestStreak  Int       @default(0)
+  lastActiveDate DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Category {
+  id          String          @id @default(uuid())
+  slug        String          @unique
+  name        String
+  description String?
+  icon        String?
+  orderIndex  Int             @default(0)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  tags        TagOnCategory[]
+  lessons     Lesson[]
+  quizzes     Quiz[]
+  scores      UserScore[]
+}
+
+model Tag {
+  id         String          @id @default(uuid())
+  slug       String          @unique
+  name       String
+  categories TagOnCategory[]
+  scores     UserScore[]
+}
+
+model TagOnCategory {
+  categoryId String
+  tagId      String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  tag        Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([categoryId, tagId])
+}
+
+model Lesson {
+  id              String         @id @default(uuid())
+  slug            String         @unique
+  title           String
+  description     String?
+  contentMarkdown String         @db.Text
+  difficulty      Difficulty     @default(NOVICE)
+  orderIndex      Int            @default(0)
+  isPublished     Boolean        @default(true)
+  categoryId      String
+  category        Category       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  quizzes         Quiz[]
+  progress        UserProgress[]
+
+  @@index([categoryId, orderIndex])
+}
+
+model Quiz {
+  id          String         @id @default(uuid())
+  title       String
+  description String?
+  difficulty  Difficulty     @default(NOVICE)
+  orderIndex  Int            @default(0)
+  isPublished Boolean        @default(true)
+  categoryId  String
+  category    Category       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  lessonId    String?
+  lesson      Lesson?        @relation(fields: [lessonId], references: [id], onDelete: SetNull)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  questions   Question[]
+  progress    UserProgress[]
+
+  @@index([categoryId])
+  @@index([lessonId])
+}
+
+model Question {
+  id          String   @id @default(uuid())
+  quizId      String
+  quiz        Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  title       String
+  codeSnippet String?  @db.Text
+  explanation String?  @db.Text
+  orderIndex  Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  answers     Answer[]
+
+  @@index([quizId, orderIndex])
+}
+
+model Answer {
+  id         String   @id @default(uuid())
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  text       String
+  isCorrect  Boolean  @default(false)
+  orderIndex Int      @default(0)
+
+  @@index([questionId])
+}
+
+model UserProgress {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lessonId    String?
+  lesson      Lesson?  @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  quizId      String?
+  quiz        Quiz?    @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  score       Int?
+  completedAt DateTime @default(now())
+
+  @@unique([userId, lessonId])
+  @@unique([userId, quizId])
+  @@index([userId])
+}
+
+model UserScore {
+  id         String    @id @default(uuid())
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  tagId      String?
+  tag        Tag?      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  xp         Int       @default(0)
+  updatedAt  DateTime  @updatedAt
+
+  @@unique([userId, categoryId])
+  @@unique([userId, tagId])
+}
+
+model ContentReport {
+  id        String       @id @default(uuid())
+  type      ReportType
+  targetId  String
+  comment   String       @db.Text
+  status    ReportStatus @default(PENDING)
+  userId    String?
+  user      User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@index([targetId])
+  @@index([status])
+}
+
+model Donation {
+  id               String   @id @default(uuid())
+  bmcTransactionId String   @unique
+  supporterEmail   String
+  supporterName    String
+  amount           Float
+  currency         String   @default("EUR")
+  message          String?  @db.Text
+  userId           String?
+  user             User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt        DateTime @default(now())
+
+  @@index([supporterEmail])
+}
