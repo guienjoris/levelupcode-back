@@ -28,7 +28,8 @@ Backend pour la plateforme d'apprentissage interactif **LevelUpCode**, conçu av
    - `INTERMEDIAIRE` (Cas pratiques, patterns courants)
    - `SENIOR` (Optimisation, performance, architecture poussée)
 
-4. **Contenu Pédagogique & Évaluations** :
+4. **Contenu Pédagogique & Évaluations (Accès Membres Inscrits)** :
+   - Accès aux leçons et aux quiz **strictement réservé aux membres inscrits et authentifiés** (accès interdit aux visiteurs non connectés).
    - Leçons concises au format Markdown avec extraits de code interactifs.
    - Quiz QCM associés à chaque leçon avec explication des réponses.
 
@@ -43,9 +44,8 @@ Backend pour la plateforme d'apprentissage interactif **LevelUpCode**, conçu av
    - **Envoi automatique d'un email instantané à l'administrateur** : notification immédiate avec l'identifiant (`id`) de la leçon ou du quiz concerné et le commentaire détaillé de l'apprenant explicitant le problème.
    - Enregistrement et suivi des signalements en base pour audit et amélioration continue du contenu.
 
-7. **Modèle 100% Gratuit & Soutien Participatif** :
-   - Accès libre et illimité à l'ensemble du catalogue de leçons et de quiz.
-   - Aucune restriction de quota journalier, aucun abonnement ni paywall.
+7. **Modèle 100% Gratuit sur Inscription & Soutien Participatif** :
+   - Inscription gratuite obligatoire pour accéder à l'intégralité du catalogue de leçons et quiz (aucun paywall ni abonnement).
    - Financement participatif via **Buy Me a Coffee** (dons volontaires & badge cosmétique supporter).
 
 8. **Administration & Gestion de Contenu (CRUD Leçons & Quiz)** :
@@ -69,7 +69,7 @@ Backend pour la plateforme d'apprentissage interactif **LevelUpCode**, conçu av
 - [x] **Étape 1** : Initialisation du projet NestJS (`nest new` / structure TypeScript), configuration Prisma & Swagger.
 - [x] **Étape 2** : Schéma relationnel Prisma (`schema.prisma` avec rôles `USER`/`ADMIN`, signalements, cascade) & migration vers Supabase + script de seed.
 - [ ] **Étape 3** : Module Auth (Email/MDP + Google + GitHub + JWT) & Guards RBAC.
-- [ ] **Étape 4** : Modules Catégories, Leçons et Quiz publics (consultation, filtrage et validation de progression).
+- [ ] **Étape 4** : Modules Catégories (catalogue public), Leçons et Quiz (consultation et complétion réservées aux membres inscrits).
 - [ ] **Étape 5** : Module Administration CRUD (Création, modification et suppression de leçons et quiz pour l'administrateur).
 - [ ] **Étape 6** : Gamification & Statistiques (calcul automatique de streak, scores par tags et XP).
 - [ ] **Étape 7** : Système d'Emails Transactionnels (`MailModule` : rappels de streak avec Cloud Scheduler & alertes admin de signalement d'erreurs).
