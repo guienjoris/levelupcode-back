@@ -70,7 +70,7 @@ Backend pour la plateforme d'apprentissage interactif **LevelUpCode**, conçu av
 - [x] **Étape 2** : Schéma relationnel Prisma (`schema.prisma` avec rôles `USER`/`ADMIN`, signalements, cascade) & migration vers Supabase + script de seed.
 - [x] **Étape 3** : Module Auth (Email/MDP + Google + GitHub + JWT) & Guards RBAC.
 - [x] **Étape 4** : Modules Catégories (catalogue public), Leçons et Quiz (consultation et complétion réservées aux membres inscrits).
-- [ ] **Étape 5** : Module Administration CRUD (Création, modification et suppression de leçons et quiz pour l'administrateur).
+- [x] **Étape 5** : Module Administration CRUD (Création, modification et suppression de leçons et quiz pour l'administrateur).
 - [ ] **Étape 6** : Gamification & Statistiques (calcul automatique de streak, scores par tags et XP).
 - [ ] **Étape 7** : Système d'Emails Transactionnels (`MailModule` : rappels de streak avec Cloud Scheduler & alertes admin de signalement d'erreurs).
 - [ ] **Étape 8** : Module de Signalement d'Erreurs (`ReportsModule` : endpoint `POST /reports`, persistance et transmission instantanée du mail à l'admin avec ID et commentaire).
