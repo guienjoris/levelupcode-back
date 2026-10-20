@@ -68,7 +68,7 @@ Backend pour la plateforme d'apprentissage interactif **LevelUpCode**, conçu av
 
 - [x] **Étape 1** : Initialisation du projet NestJS (`nest new` / structure TypeScript), configuration Prisma & Swagger.
 - [x] **Étape 2** : Schéma relationnel Prisma (`schema.prisma` avec rôles `USER`/`ADMIN`, signalements, cascade) & migration vers Supabase + script de seed.
-- [ ] **Étape 3** : Module Auth (Email/MDP + Google + GitHub + JWT) & Guards RBAC.
+- [x] **Étape 3** : Module Auth (Email/MDP + Google + GitHub + JWT) & Guards RBAC.
 - [ ] **Étape 4** : Modules Catégories (catalogue public), Leçons et Quiz (consultation et complétion réservées aux membres inscrits).
 - [ ] **Étape 5** : Module Administration CRUD (Création, modification et suppression de leçons et quiz pour l'administrateur).
 - [ ] **Étape 6** : Gamification & Statistiques (calcul automatique de streak, scores par tags et XP).
