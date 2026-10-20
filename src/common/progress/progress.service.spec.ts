@@ -22,6 +22,9 @@ describe('ProgressService', () => {
       create: vi.fn(),
       update: vi.fn(),
     },
+    tagOnCategory: {
+      findMany: vi.fn().mockResolvedValue([]),
+    },
   };
 
   beforeEach(async () => {

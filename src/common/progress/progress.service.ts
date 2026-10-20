@@ -83,6 +83,31 @@ export class ProgressService {
           xp: xpEarned,
         },
       });
+
+      // Mettre à jour également l'XP pour les tags rattachés à cette catégorie
+      const categoryTags = await this.prisma.tagOnCategory.findMany({
+        where: { categoryId },
+        select: { tagId: true },
+      });
+
+      for (const { tagId } of categoryTags) {
+        await this.prisma.userScore.upsert({
+          where: {
+            userId_tagId: {
+              userId,
+              tagId,
+            },
+          },
+          update: {
+            xp: { increment: xpEarned },
+          },
+          create: {
+            userId,
+            tagId,
+            xp: xpEarned,
+          },
+        });
+      }
     }
 
     // 4. Mise à jour du streak quotidien de l'utilisateur

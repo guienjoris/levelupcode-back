@@ -7,6 +7,7 @@ import { LessonsModule } from './lessons/lessons.module.js';
 import { QuizzesModule } from './quizzes/quizzes.module.js';
 import { ProgressModule } from './common/progress/progress.module.js';
 import { AdminModule } from './admin/admin.module.js';
+import { GamificationModule } from './gamification/gamification.module.js';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 
@@ -23,6 +24,7 @@ import { AppService } from './app.service.js';
     LessonsModule,
     QuizzesModule,
     AdminModule,
+    GamificationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
