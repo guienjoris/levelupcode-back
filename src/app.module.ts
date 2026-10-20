@@ -8,6 +8,8 @@ import { QuizzesModule } from './quizzes/quizzes.module.js';
 import { ProgressModule } from './common/progress/progress.module.js';
 import { AdminModule } from './admin/admin.module.js';
 import { GamificationModule } from './gamification/gamification.module.js';
+import { MailModule } from './mail/mail.module.js';
+import { NotificationsModule } from './notifications/notifications.module.js';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 
@@ -19,6 +21,8 @@ import { AppService } from './app.service.js';
     }),
     PrismaModule,
     ProgressModule,
+    MailModule,
+    NotificationsModule,
     AuthModule,
     CategoriesModule,
     LessonsModule,
