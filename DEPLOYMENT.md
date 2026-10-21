@@ -120,7 +120,7 @@ gcloud scheduler jobs create http streak-daily-reminders \
   --time-zone "Europe/Paris" \
   --uri "https://<VOTRE-URL-CLOUD-RUN>/notifications/send-daily-reminders" \
   --http-method POST \
-  --headers "x-cron-secret=Bearer 49b11dad40cea4e8845bb59c8dbe77478a180383e76252603407556c99e5f4bd,Content-Type=application/json" \
+  --headers "x-cron-secret=Bearer <CRON_SECRET>,Content-Type=application/json" \
   --description "Envoi quotidien des emails de rappel de streak aux apprenants inactifs"
 ```
 
