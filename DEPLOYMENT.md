@@ -50,6 +50,12 @@ gcloud services enable \
   secretmanager.googleapis.com \
   cloudscheduler.googleapis.com
 
+# Autoriser le compte de service Cloud Run à lire Secret Manager
+PROJECT_NUMBER=$(gcloud projects describe levelupcode-512207 --format="value(projectNumber)")
+gcloud projects add-iam-policy-binding levelupcode-512207 \
+  --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
+  --role="roles/secretmanager.secretAccessor"
+
 # Déployer directement depuis le dossier racine du projet
 gcloud run deploy levelupcode-api \
   --source . \
