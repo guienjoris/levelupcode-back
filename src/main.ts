@@ -72,9 +72,9 @@ async function bootstrap() {
   // Graceful shutdown
   app.enableShutdownHooks();
 
-  await app.listen(port);
-  logger.log(`🚀 Serveur démarré avec succès sur : http://localhost:${port}`);
-  logger.log(`📚 Documentation Swagger accessible sur : http://localhost:${port}/api/docs`);
+  await app.listen(port, '0.0.0.0');
+  logger.log(`🚀 Serveur démarré avec succès sur le port : ${port}`);
+  logger.log(`📚 Documentation Swagger accessible sur /api/docs`);
 }
 
 await bootstrap();

@@ -74,5 +74,15 @@ Backend pour la plateforme d'apprentissage interactif **LevelUpCode**, conçu av
 - [x] **Étape 6** : Gamification & Statistiques (calcul automatique de streak, scores par tags et XP).
 - [x] **Étape 7** : Système d'Emails Transactionnels (`MailModule` & `NotificationsModule` : intégration Resend, rappels de streak avec Cloud Scheduler, désinscription 1-clic & alertes admin).
 - [x] **Étape 8** : Module de Signalement d'Erreurs (`ReportsModule` : endpoint `POST /reports` avec rate limiting Throttler, persistance Supabase, alerte instantanée Resend à l'admin et routes d'administration `/admin/reports`).
-- [x] **Étape 9** : Module Dons & Webhook Buy Me a Coffee (`DonationsModule` : webhook idempotent sécurisé BMC, attribution automatique du badge Supporter, rattachement rétroactif et suivi admin).
-- [ ] **Étape 10** : Dockerfile de production & déploiement Cloud Run.
+- [x] **Étape 10** : Dockerfile de production & déploiement Cloud Run (multi-stage optimisé, sécurité non-root et guide [DEPLOYMENT.md](./DEPLOYMENT.md)).
+
+---
+
+## 🚀 Déploiement & Production
+
+Consultez le guide complet **[DEPLOYMENT.md](./DEPLOYMENT.md)** pour les instructions pas-à-pas :
+- Conteneurisation via le `Dockerfile` multi-stage (Node 22, non-root, Prisma 7).
+- Déploiement sur Google Cloud Run avec autoscaling à 0 instance (coût minimal).
+- Déclenchement automatique des rappels de streak à 19h00 via Google Cloud Scheduler.
+- Configuration du webhook Buy Me a Coffee et Secret Manager.
+

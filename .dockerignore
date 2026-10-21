@@ -1,0 +1,33 @@
+# Dependencies and builds
+node_modules
+dist
+coverage
+*.tsbuildinfo
+
+# Environment and sensitive credentials
+.env
+.env.local
+.env.*.local
+
+# Git and IDE configurations
+.git
+.gitignore
+.agents
+.claude
+.cursor
+.devin
+.vscode
+.idea
+
+# Tests and documentation
+test
+src/**/*.spec.ts
+vitest.config.ts
+vitest.config.e2e.ts
+README.md
+
+# Logs and cache
+*.log
+npm-debug.log*
+yarn-debug.log*
+.DS_Store
