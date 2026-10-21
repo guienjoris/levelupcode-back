@@ -38,8 +38,7 @@ COPY src ./src
 RUN npm run build
 
 # Élagage des dépendances de dev pour ne conserver que les dépendances de production
-RUN npm prune --production --legacy-peer-deps && \
-    npx prisma generate
+RUN npm prune --production --legacy-peer-deps
 
 # ------------------------------------------------------------------------------
 # Étape 2 : Runner de Production (Image finale minimale et sécurisée)
