@@ -21,6 +21,10 @@ COPY package.json package-lock.json .npmrc ./
 # Installation propre des dépendances avec support legacy-peer-deps
 RUN npm ci --legacy-peer-deps
 
+# Variables d'environnement fictives pour la phase de build (génération client Prisma sans accès BD réseau)
+ENV DIRECT_URL="postgresql://placeholder:placeholder@localhost:5432/placeholder"
+ENV DATABASE_URL="postgresql://placeholder:placeholder@localhost:5432/placeholder"
+
 # Copie du schéma Prisma et génération du client Prisma 7
 COPY prisma.config.ts ./
 COPY prisma ./prisma
