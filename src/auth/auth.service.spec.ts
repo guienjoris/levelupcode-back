@@ -19,6 +19,10 @@ describe('AuthService', () => {
       create: vi.fn(),
       update: vi.fn(),
     },
+    donation: {
+      findMany: vi.fn().mockResolvedValue([]),
+      updateMany: vi.fn().mockResolvedValue({ count: 0 }),
+    },
   };
 
   const mockJwtService = {

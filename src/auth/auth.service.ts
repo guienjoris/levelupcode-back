@@ -41,6 +41,13 @@ export class AuthService {
 
     const passwordHash = await argon2.hash(dto.password);
 
+    // Vérifier si des dons Buy Me a Coffee antérieurs avaient été effectués avec cette adresse email
+    const priorDonations = await this.prisma.donation.findMany({
+      where: { supporterEmail: email, userId: null },
+      orderBy: { createdAt: 'asc' },
+    });
+    const hasPriorDonations = priorDonations.length > 0;
+
     const user = await this.prisma.user.create({
       data: {
         email,
@@ -48,6 +55,8 @@ export class AuthService {
         name: dto.name?.trim() || null,
         provider: AuthProvider.LOCAL,
         role: Role.USER,
+        isSupporter: hasPriorDonations,
+        supporterSince: hasPriorDonations ? priorDonations[0].createdAt : null,
         streak: {
           create: {
             currentStreak: 0,
@@ -59,6 +68,14 @@ export class AuthService {
         streak: true,
       },
     });
+
+    if (hasPriorDonations) {
+      await this.prisma.donation.updateMany({
+        where: { supporterEmail: email },
+        data: { userId: user.id },
+      });
+      this.logger.log(`Dons antérieurs rattachés au compte ${user.email} (Statut Supporter accordé)`);
+    }
 
     this.logger.log(`Nouvel utilisateur inscrit avec succès : ${user.email} (${user.id})`);
     return this.generateTokens(user);
@@ -133,6 +150,12 @@ export class AuthService {
     });
 
     if (!user) {
+      const priorDonations = await this.prisma.donation.findMany({
+        where: { supporterEmail: email, userId: null },
+        orderBy: { createdAt: 'asc' },
+      });
+      const hasPriorDonations = priorDonations.length > 0;
+
       user = await this.prisma.user.create({
         data: {
           email,
@@ -140,6 +163,8 @@ export class AuthService {
           avatarUrl: oAuthUser.avatarUrl || null,
           provider: oAuthUser.provider,
           role: Role.USER,
+          isSupporter: hasPriorDonations,
+          supporterSince: hasPriorDonations ? priorDonations[0].createdAt : null,
           streak: {
             create: {
               currentStreak: 0,
@@ -149,6 +174,14 @@ export class AuthService {
         },
         include: { streak: true },
       });
+
+      if (hasPriorDonations) {
+        await this.prisma.donation.updateMany({
+          where: { supporterEmail: email },
+          data: { userId: user.id },
+        });
+      }
+
       this.logger.log(`Nouvel utilisateur OAuth créé : ${user.email} (${oAuthUser.provider})`);
     } else if (oAuthUser.avatarUrl && !user.avatarUrl) {
       user = await this.prisma.user.update({

@@ -12,6 +12,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { MailModule } from './mail/mail.module.js';
 import { NotificationsModule } from './notifications/notifications.module.js';
 import { ReportsModule } from './reports/reports.module.js';
+import { DonationsModule } from './donations/donations.module.js';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 
@@ -32,6 +33,7 @@ import { AppService } from './app.service.js';
     MailModule,
     NotificationsModule,
     ReportsModule,
+    DonationsModule,
     AuthModule,
     CategoriesModule,
     LessonsModule,
