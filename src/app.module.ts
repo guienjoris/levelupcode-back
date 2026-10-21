@@ -8,8 +8,10 @@ import { QuizzesModule } from './quizzes/quizzes.module.js';
 import { ProgressModule } from './common/progress/progress.module.js';
 import { AdminModule } from './admin/admin.module.js';
 import { GamificationModule } from './gamification/gamification.module.js';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { MailModule } from './mail/mail.module.js';
 import { NotificationsModule } from './notifications/notifications.module.js';
+import { ReportsModule } from './reports/reports.module.js';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 
@@ -19,10 +21,17 @@ import { AppService } from './app.service.js';
       isGlobal: true,
       envFilePath: ['.env.local', '.env'],
     }),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 60,
+      },
+    ]),
     PrismaModule,
     ProgressModule,
     MailModule,
     NotificationsModule,
+    ReportsModule,
     AuthModule,
     CategoriesModule,
     LessonsModule,

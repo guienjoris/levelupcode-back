@@ -8,6 +8,7 @@ import { JwtStrategy } from './strategies/jwt.strategy.js';
 import { GoogleStrategy } from './strategies/google.strategy.js';
 import { GithubStrategy } from './strategies/github.strategy.js';
 import { JwtAuthGuard } from './guards/jwt-auth.guard.js';
+import { OptionalJwtAuthGuard } from './guards/optional-jwt-auth.guard.js';
 import { RolesGuard } from './guards/roles.guard.js';
 
 @Module({
@@ -23,11 +24,13 @@ import { RolesGuard } from './guards/roles.guard.js';
     GoogleStrategy,
     GithubStrategy,
     JwtAuthGuard,
+    OptionalJwtAuthGuard,
     RolesGuard,
   ],
   exports: [
     AuthService,
     JwtAuthGuard,
+    OptionalJwtAuthGuard,
     RolesGuard,
     JwtModule,
     PassportModule,

@@ -73,6 +73,6 @@ Backend pour la plateforme d'apprentissage interactif **LevelUpCode**, conçu av
 - [x] **Étape 5** : Module Administration CRUD (Création, modification et suppression de leçons et quiz pour l'administrateur).
 - [x] **Étape 6** : Gamification & Statistiques (calcul automatique de streak, scores par tags et XP).
 - [x] **Étape 7** : Système d'Emails Transactionnels (`MailModule` & `NotificationsModule` : intégration Resend, rappels de streak avec Cloud Scheduler, désinscription 1-clic & alertes admin).
-- [ ] **Étape 8** : Module de Signalement d'Erreurs (`ReportsModule` : endpoint `POST /reports`, persistance et transmission instantanée du mail à l'admin avec ID et commentaire).
+- [x] **Étape 8** : Module de Signalement d'Erreurs (`ReportsModule` : endpoint `POST /reports` avec rate limiting Throttler, persistance Supabase, alerte instantanée Resend à l'admin et routes d'administration `/admin/reports`).
 - [ ] **Étape 9** : Module Dons & Webhook Buy Me a Coffee (attribution du badge supporter).
 - [ ] **Étape 10** : Dockerfile de production & déploiement Cloud Run.
