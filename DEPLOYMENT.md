@@ -96,7 +96,7 @@ Pour la sécurité en production, stockez les secrets sensibles dans **Google Se
 ```bash
 gcloud run services update levelupcode-api \
   --region europe-west1 \
-  --update-env-vars DATABASE_URL="...",DIRECT_URL="...",JWT_SECRET="...",ADMIN_EMAIL="guienjoris@gmail.com",CRON_SECRET="...",RESEND_API_KEY="..."
+  --update-env-vars DATABASE_URL="...",DIRECT_URL="...",JWT_SECRET="...",ADMIN_EMAIL="[EMAIL_ADDRESS]",CRON_SECRET="...",RESEND_API_KEY="..."
 ```
 
 ---
