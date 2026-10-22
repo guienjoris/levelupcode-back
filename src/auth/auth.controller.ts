@@ -7,6 +7,7 @@ import {
   HttpStatus,
   UseGuards,
   Req,
+  Res
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -24,11 +25,12 @@ import { AuthResponseDto, UserProfileDto } from './dto/auth-response.dto.js';
 import { JwtAuthGuard } from './guards/jwt-auth.guard.js';
 import { CurrentUser } from './decorators/current-user.decorator.js';
 import { OAuthUser } from './strategies/google.strategy.js';
+import type { Response } from 'express';
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Post('register')
   @ApiOperation({
@@ -129,8 +131,15 @@ export class AuthController {
   @ApiOperation({ summary: 'Callback Google OAuth2' })
   async googleAuthRedirect(
     @Req() req: { user: OAuthUser },
-  ): Promise<AuthResponseDto> {
-    return this.authService.handleOAuthLogin(req.user);
+    @Res() res: Response,
+  ): Promise<void> {
+    const authData = await this.authService.handleOAuthLogin(req.user);
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:4200';
+
+    // Redirection vers le front avec les tokens dans l'URL
+    return res.redirect(
+      `${frontendUrl}/login?accessToken=${authData.accessToken}&refreshToken=${authData.refreshToken}`,
+    );
   }
 
   @Get('github')
@@ -145,7 +154,13 @@ export class AuthController {
   @ApiOperation({ summary: 'Callback GitHub OAuth2' })
   async githubAuthRedirect(
     @Req() req: { user: OAuthUser },
-  ): Promise<AuthResponseDto> {
-    return this.authService.handleOAuthLogin(req.user);
+    @Res() res: Response,
+  ) {
+    const authData = await this.authService.handleOAuthLogin(req.user);
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:4200';
+
+    return res.redirect(
+      `${frontendUrl}/login?accessToken=${authData.accessToken}&refreshToken=${authData.refreshToken}`,
+    );
   }
 }

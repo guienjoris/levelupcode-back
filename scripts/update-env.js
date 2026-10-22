@@ -50,7 +50,7 @@ function organizeEnvFile(secretsMap) {
   const sections = [
     {
       title: 'Environment',
-      keys: ['PORT', 'NODE_ENV'],
+      keys: ['PORT', 'NODE_ENV', 'FRONTEND_URL'],
     },
     {
       title: 'Supabase PostgreSQL Configuration',
