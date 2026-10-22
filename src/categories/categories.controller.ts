@@ -11,7 +11,8 @@ export class CategoriesController {
   @Get()
   @ApiOperation({
     summary: 'Catalogue public des catégories d’apprentissage',
-    description: 'Retourne la liste des 9 catégories officielles avec leurs tags et compteurs de contenu.',
+    description:
+      'Retourne la liste des 9 catégories officielles avec leurs tags et compteurs de contenu.',
   })
   @ApiResponse({
     status: 200,
@@ -25,9 +26,14 @@ export class CategoriesController {
   @Get(':slug')
   @ApiOperation({
     summary: 'Détail d’une catégorie par son slug',
-    description: 'Retourne les informations d’une catégorie spécifique (ex: javascript, nestjs, react).',
+    description:
+      'Retourne les informations d’une catégorie spécifique (ex: javascript, nestjs, react).',
   })
-  @ApiParam({ name: 'slug', example: 'nestjs', description: 'Slug de la catégorie' })
+  @ApiParam({
+    name: 'slug',
+    example: 'nestjs',
+    description: 'Slug de la catégorie',
+  })
   @ApiResponse({
     status: 200,
     description: 'Catégorie trouvée',

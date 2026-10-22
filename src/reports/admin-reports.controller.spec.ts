@@ -22,9 +22,7 @@ describe('AdminReportsController', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AdminReportsController],
-      providers: [
-        { provide: ReportsService, useValue: mockReportsService },
-      ],
+      providers: [{ provide: ReportsService, useValue: mockReportsService }],
     })
       .overrideGuard(JwtAuthGuard)
       .useValue({ canActivate: () => true })
@@ -55,7 +53,9 @@ describe('AdminReportsController', () => {
   it('devrait appeler findOne avec l’UUID', async () => {
     mockReportsService.findOne.mockResolvedValue({ id: 'rep-1' });
 
-    const result = await controller.findOne('550e8400-e29b-41d4-a716-446655440000');
+    const result = await controller.findOne(
+      '550e8400-e29b-41d4-a716-446655440000',
+    );
     expect(result.id).toBe('rep-1');
     expect(mockReportsService.findOne).toHaveBeenCalledWith(
       '550e8400-e29b-41d4-a716-446655440000',
@@ -82,7 +82,9 @@ describe('AdminReportsController', () => {
   it('devrait appeler delete avec l’UUID', async () => {
     mockReportsService.delete.mockResolvedValue({ success: true });
 
-    const result = await controller.delete('550e8400-e29b-41d4-a716-446655440000');
+    const result = await controller.delete(
+      '550e8400-e29b-41d4-a716-446655440000',
+    );
     expect(result.success).toBe(true);
     expect(mockReportsService.delete).toHaveBeenCalledWith(
       '550e8400-e29b-41d4-a716-446655440000',

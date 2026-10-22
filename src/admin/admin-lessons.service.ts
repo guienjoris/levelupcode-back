@@ -18,7 +18,9 @@ export class AdminLessonsService {
     return this.prisma.lesson.findMany({
       where: {
         ...(params?.categoryId ? { categoryId: params.categoryId } : {}),
-        ...(params?.isPublished !== undefined ? { isPublished: params.isPublished } : {}),
+        ...(params?.isPublished !== undefined
+          ? { isPublished: params.isPublished }
+          : {}),
       },
       orderBy: [{ categoryId: 'asc' }, { orderIndex: 'asc' }],
       include: {
@@ -63,7 +65,9 @@ export class AdminLessonsService {
       where: { slug },
     });
     if (existingSlug) {
-      throw new ConflictException(`Une leçon avec le slug "${slug}" existe déjà.`);
+      throw new ConflictException(
+        `Une leçon avec le slug "${slug}" existe déjà.`,
+      );
     }
 
     // 2. Vérification existence de la catégorie
@@ -71,7 +75,9 @@ export class AdminLessonsService {
       where: { id: dto.categoryId },
     });
     if (!category) {
-      throw new NotFoundException(`Catégorie avec l'identifiant "${dto.categoryId}" introuvable.`);
+      throw new NotFoundException(
+        `Catégorie avec l'identifiant "${dto.categoryId}" introuvable.`,
+      );
     }
 
     const lesson = await this.prisma.lesson.create({
@@ -92,7 +98,9 @@ export class AdminLessonsService {
       },
     });
 
-    this.logger.log(`Leçon créée par l'administrateur : ${lesson.title} (${lesson.id})`);
+    this.logger.log(
+      `Leçon créée par l'administrateur : ${lesson.title} (${lesson.id})`,
+    );
     return lesson;
   }
 
@@ -112,7 +120,9 @@ export class AdminLessonsService {
           where: { slug },
         });
         if (slugTaken) {
-          throw new ConflictException(`Le slug "${slug}" est déjà utilisé par une autre leçon.`);
+          throw new ConflictException(
+            `Le slug "${slug}" est déjà utilisé par une autre leçon.`,
+          );
         }
       }
     }
@@ -123,7 +133,9 @@ export class AdminLessonsService {
         where: { id: dto.categoryId },
       });
       if (!category) {
-        throw new NotFoundException(`Catégorie "${dto.categoryId}" introuvable.`);
+        throw new NotFoundException(
+          `Catégorie "${dto.categoryId}" introuvable.`,
+        );
       }
     }
 
@@ -132,12 +144,18 @@ export class AdminLessonsService {
       data: {
         ...(dto.slug ? { slug: dto.slug.toLowerCase().trim() } : {}),
         ...(dto.title ? { title: dto.title.trim() } : {}),
-        ...(dto.description !== undefined ? { description: dto.description?.trim() || null } : {}),
-        ...(dto.contentMarkdown ? { contentMarkdown: dto.contentMarkdown } : {}),
+        ...(dto.description !== undefined
+          ? { description: dto.description?.trim() || null }
+          : {}),
+        ...(dto.contentMarkdown
+          ? { contentMarkdown: dto.contentMarkdown }
+          : {}),
         ...(dto.difficulty ? { difficulty: dto.difficulty } : {}),
         ...(dto.orderIndex !== undefined ? { orderIndex: dto.orderIndex } : {}),
         ...(dto.categoryId ? { categoryId: dto.categoryId } : {}),
-        ...(dto.isPublished !== undefined ? { isPublished: dto.isPublished } : {}),
+        ...(dto.isPublished !== undefined
+          ? { isPublished: dto.isPublished }
+          : {}),
       },
       include: {
         category: {
@@ -146,7 +164,9 @@ export class AdminLessonsService {
       },
     });
 
-    this.logger.log(`Leçon mise à jour par l'administrateur : ${updated.title} (${updated.id})`);
+    this.logger.log(
+      `Leçon mise à jour par l'administrateur : ${updated.title} (${updated.id})`,
+    );
     return updated;
   }
 
@@ -162,7 +182,9 @@ export class AdminLessonsService {
       where: { id },
     });
 
-    this.logger.log(`Leçon supprimée par l'administrateur : ${existingLesson.title} (${id})`);
+    this.logger.log(
+      `Leçon supprimée par l'administrateur : ${existingLesson.title} (${id})`,
+    );
     return {
       success: true,
       message: 'La leçon a été supprimée avec succès.',

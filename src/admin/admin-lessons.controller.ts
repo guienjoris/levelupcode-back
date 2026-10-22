@@ -38,10 +38,20 @@ export class AdminLessonsController {
   @Get()
   @ApiOperation({
     summary: 'Liste administrative de toutes les leçons (Admin uniquement)',
-    description: 'Retourne l’ensemble des leçons avec statistiques de progression et quiz associés.',
+    description:
+      'Retourne l’ensemble des leçons avec statistiques de progression et quiz associés.',
   })
-  @ApiQuery({ name: 'categoryId', required: false, description: 'Filtrer par UUID de catégorie' })
-  @ApiQuery({ name: 'isPublished', required: false, type: Boolean, description: 'Filtrer par statut publié' })
+  @ApiQuery({
+    name: 'categoryId',
+    required: false,
+    description: 'Filtrer par UUID de catégorie',
+  })
+  @ApiQuery({
+    name: 'isPublished',
+    required: false,
+    type: Boolean,
+    description: 'Filtrer par statut publié',
+  })
   @ApiResponse({ status: 200, description: 'Liste des leçons' })
   @ApiResponse({ status: 403, description: 'Accès refusé : rôle ADMIN requis' })
   async findAll(
@@ -67,8 +77,14 @@ export class AdminLessonsController {
     summary: 'Création d’une nouvelle leçon (Admin uniquement)',
     description: 'Crée une nouvelle leçon Markdown rattachée à une catégorie.',
   })
-  @ApiResponse({ status: HttpStatus.CREATED, description: 'Leçon créée avec succès' })
-  @ApiResponse({ status: 409, description: 'Conflit : le slug est déjà utilisé' })
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: 'Leçon créée avec succès',
+  })
+  @ApiResponse({
+    status: 409,
+    description: 'Conflit : le slug est déjà utilisé',
+  })
   @ApiResponse({ status: 404, description: 'Catégorie spécifiée introuvable' })
   async create(@Body() dto: CreateLessonDto) {
     return this.adminLessonsService.create(dto);
@@ -77,7 +93,8 @@ export class AdminLessonsController {
   @Patch(':id')
   @ApiOperation({
     summary: 'Mise à jour d’une leçon (Admin uniquement)',
-    description: 'Permet de modifier le titre, slug, contenu Markdown, difficulté ou statut de publication.',
+    description:
+      'Permet de modifier le titre, slug, contenu Markdown, difficulté ou statut de publication.',
   })
   @ApiParam({ name: 'id', example: 'a1b2c3d4-e5f6-7890-1234-56789abcdef0' })
   @ApiResponse({ status: 200, description: 'Leçon mise à jour avec succès' })

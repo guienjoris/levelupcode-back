@@ -23,7 +23,8 @@ export class QuestionAnswerSubmissionDto {
 export class SubmitQuizDto {
   @ApiProperty({
     type: [QuestionAnswerSubmissionDto],
-    description: 'Liste des réponses sélectionnées pour chaque question du quiz',
+    description:
+      'Liste des réponses sélectionnées pour chaque question du quiz',
   })
   @IsArray()
   @ValidateNested({ each: true })

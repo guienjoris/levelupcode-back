@@ -2,7 +2,10 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { JwtPayload, UserFromToken } from '../interfaces/jwt-payload.interface.js';
+import {
+  JwtPayload,
+  UserFromToken,
+} from '../interfaces/jwt-payload.interface.js';
 import { PrismaService } from '../../prisma/prisma.service.js';
 
 @Injectable()
@@ -14,7 +17,10 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: configService.get<string>('JWT_SECRET', 'super-secret-jwt-key'),
+      secretOrKey: configService.get<string>(
+        'JWT_SECRET',
+        'super-secret-jwt-key',
+      ),
     });
   }
 
@@ -25,7 +31,9 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     });
 
     if (!user) {
-      throw new UnauthorizedException('Utilisateur introuvable ou session révoquée.');
+      throw new UnauthorizedException(
+        'Utilisateur introuvable ou session révoquée.',
+      );
     }
 
     return {

@@ -50,14 +50,31 @@ async function bootstrap() {
     )
     .addTag('Health', 'État de santé et informations système')
     .addTag('Auth', 'Authentification locale et OAuth2 (Google, GitHub)')
-    .addTag('Categories', 'Gestion et consultation des 9 catégories pédagogiques')
-    .addTag('Lessons', 'Catalogue des leçons, markdown et validation de progression')
-    .addTag('Quizzes', 'QCM interactifs, soumission des réponses et explications')
+    .addTag(
+      'Categories',
+      'Gestion et consultation des 9 catégories pédagogiques',
+    )
+    .addTag(
+      'Lessons',
+      'Catalogue des leçons, markdown et validation de progression',
+    )
+    .addTag(
+      'Quizzes',
+      'QCM interactifs, soumission des réponses et explications',
+    )
     .addTag('Gamification', 'Streaks, points XP, durées et classements')
-    .addTag('Reports', "Signalement d'erreurs et alertes automatiques à l'administrateur")
+    .addTag(
+      'Reports',
+      "Signalement d'erreurs et alertes automatiques à l'administrateur",
+    )
     .addTag('Donations', 'Soutien Buy Me a Coffee et statut Supporter')
     .addTag('Admin - Lessons', 'CRUD administratif complet des leçons')
-    .addTag('Admin - Quizzes', 'CRUD administratif complet des quiz et questions')
+    .addTag(
+      'Admin - Quizzes',
+      'CRUD administratif complet des quiz et questions',
+    )
+    .addTag('Admin - Categories', 'CRUD administratif complet des catégories')
+    .addTag('Admin - Tags', 'CRUD administratif complet des tags techniques')
     .addTag('Notifications', 'Rappels quotidiens Cloud Scheduler')
     .build();
 

@@ -31,7 +31,8 @@ export class QuizzesController {
 
   @Get(':id')
   @ApiOperation({
-    summary: 'Consultation d’un quiz et de ses questions (Membres connectés uniquement)',
+    summary:
+      'Consultation d’un quiz et de ses questions (Membres connectés uniquement)',
     description:
       'Retourne les questions et choix possibles du quiz. Les bonnes réponses restent masquées jusqu’à la soumission.',
   })
@@ -63,7 +64,8 @@ export class QuizzesController {
   @Post(':id/submit')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
-    summary: 'Soumission des réponses et évaluation du quiz (Membres connectés uniquement)',
+    summary:
+      'Soumission des réponses et évaluation du quiz (Membres connectés uniquement)',
     description:
       'Corrige les réponses fournies, calcule le score, renvoie les explications détaillées et met à jour le streak.',
   })
@@ -74,7 +76,8 @@ export class QuizzesController {
   })
   @ApiResponse({
     status: 200,
-    description: 'Résultat du quiz avec correction et explications pédagogiques',
+    description:
+      'Résultat du quiz avec correction et explications pédagogiques',
     type: QuizResultDto,
   })
   @ApiResponse({

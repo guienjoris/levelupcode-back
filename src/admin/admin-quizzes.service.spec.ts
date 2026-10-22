@@ -119,12 +119,17 @@ describe('AdminQuizzesService', () => {
 
   describe('remove', () => {
     it('devrait supprimer le quiz en cascade', async () => {
-      mockPrisma.quiz.findUnique.mockResolvedValue({ id: 'quiz-1', title: 'Q' });
+      mockPrisma.quiz.findUnique.mockResolvedValue({
+        id: 'quiz-1',
+        title: 'Q',
+      });
       mockPrisma.quiz.delete.mockResolvedValue({});
 
       const res = await service.remove('quiz-1');
       expect(res.success).toBe(true);
-      expect(mockPrisma.quiz.delete).toHaveBeenCalledWith({ where: { id: 'quiz-1' } });
+      expect(mockPrisma.quiz.delete).toHaveBeenCalledWith({
+        where: { id: 'quiz-1' },
+      });
     });
   });
 });

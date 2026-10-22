@@ -33,7 +33,8 @@ export class AuthController {
   @Post('register')
   @ApiOperation({
     summary: 'Inscription d’un nouvel apprenant',
-    description: 'Crée un nouveau compte, initialise son streak quotidien et retourne les jetons JWT.',
+    description:
+      'Crée un nouveau compte, initialise son streak quotidien et retourne les jetons JWT.',
   })
   @ApiResponse({
     status: HttpStatus.CREATED,
@@ -52,7 +53,8 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Connexion locale (email / mot de passe)',
-    description: 'Authentifie l’utilisateur et retourne une paire de jetons (access + refresh token).',
+    description:
+      'Authentifie l’utilisateur et retourne une paire de jetons (access + refresh token).',
   })
   @ApiResponse({
     status: HttpStatus.OK,
@@ -71,7 +73,8 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Rafraîchissement du token d’accès',
-    description: 'Génère un nouvel access token à partir d’un refresh token valide.',
+    description:
+      'Génère un nouvel access token à partir d’un refresh token valide.',
   })
   @ApiBody({ type: RefreshTokenDto })
   @ApiResponse({
@@ -87,7 +90,9 @@ export class AuthController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Refresh token invalide ou expiré',
   })
-  async refresh(@Body() dto: RefreshTokenDto): Promise<{ accessToken: string }> {
+  async refresh(
+    @Body() dto: RefreshTokenDto,
+  ): Promise<{ accessToken: string }> {
     return this.authService.refreshTokens(dto.refreshToken);
   }
 
@@ -96,7 +101,8 @@ export class AuthController {
   @ApiBearerAuth('JWT-auth')
   @ApiOperation({
     summary: 'Profil de l’utilisateur connecté',
-    description: 'Retourne les informations du compte actuellement authentifié (rôle, streak, etc.).',
+    description:
+      'Retourne les informations du compte actuellement authentifié (rôle, streak, etc.).',
   })
   @ApiResponse({
     status: HttpStatus.OK,
@@ -121,7 +127,9 @@ export class AuthController {
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
   @ApiOperation({ summary: 'Callback Google OAuth2' })
-  async googleAuthRedirect(@Req() req: { user: OAuthUser }): Promise<AuthResponseDto> {
+  async googleAuthRedirect(
+    @Req() req: { user: OAuthUser },
+  ): Promise<AuthResponseDto> {
     return this.authService.handleOAuthLogin(req.user);
   }
 
@@ -135,7 +143,9 @@ export class AuthController {
   @Get('github/callback')
   @UseGuards(AuthGuard('github'))
   @ApiOperation({ summary: 'Callback GitHub OAuth2' })
-  async githubAuthRedirect(@Req() req: { user: OAuthUser }): Promise<AuthResponseDto> {
+  async githubAuthRedirect(
+    @Req() req: { user: OAuthUser },
+  ): Promise<AuthResponseDto> {
     return this.authService.handleOAuthLogin(req.user);
   }
 }

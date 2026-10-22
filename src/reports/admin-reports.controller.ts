@@ -64,7 +64,8 @@ export class AdminReportsController {
   @Patch(':id')
   @ApiOperation({
     summary: 'Mettre à jour le statut d’un signalement (Admin)',
-    description: 'Permet de passer un signalement à PENDING, RESOLVED ou DISMISSED.',
+    description:
+      'Permet de passer un signalement à PENDING, RESOLVED ou DISMISSED.',
   })
   @ApiParam({ name: 'id', description: 'UUID du signalement' })
   @ApiResponse({ status: 200, description: 'Statut mis à jour' })
@@ -79,7 +80,8 @@ export class AdminReportsController {
   @Delete(':id')
   @ApiOperation({
     summary: 'Supprimer un signalement d’erreur (Admin)',
-    description: 'Supprime définitivement un signalement de la base de données.',
+    description:
+      'Supprime définitivement un signalement de la base de données.',
   })
   @ApiParam({ name: 'id', description: 'UUID du signalement' })
   @ApiResponse({ status: 200, description: 'Signalement supprimé avec succès' })

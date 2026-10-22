@@ -17,10 +17,13 @@ import { Difficulty } from '@prisma/client';
 
 export class CreateAdminAnswerDto {
   @ApiProperty({
-    example: 'Une fonction qui applique le patron décorateur en annotant une classe.',
+    example:
+      'Une fonction qui applique le patron décorateur en annotant une classe.',
     description: 'Intitulé textuel de la proposition de réponse',
   })
-  @IsString({ message: 'Le texte de la réponse doit être une chaîne de caractères.' })
+  @IsString({
+    message: 'Le texte de la réponse doit être une chaîne de caractères.',
+  })
   @IsNotEmpty({ message: 'Le texte de la réponse est obligatoire.' })
   text: string;
 
@@ -47,7 +50,9 @@ export class CreateAdminQuestionDto {
     example: 'Quel mot-clé TypeScript active l’utilisation des décorateurs ?',
     description: 'Énoncé de la question',
   })
-  @IsString({ message: 'L’énoncé de la question doit être une chaîne de caractères.' })
+  @IsString({
+    message: 'L’énoncé de la question doit être une chaîne de caractères.',
+  })
   @IsNotEmpty({ message: 'L’énoncé de la question est obligatoire.' })
   title: string;
 
@@ -60,8 +65,10 @@ export class CreateAdminQuestionDto {
   codeSnippet?: string;
 
   @ApiPropertyOptional({
-    example: 'L’option experimentalDecorators du tsconfig.json active les décorateurs TS classiques.',
-    description: 'Explication pédagogique affichée à l’apprenant après soumission',
+    example:
+      'L’option experimentalDecorators du tsconfig.json active les décorateurs TS classiques.',
+    description:
+      'Explication pédagogique affichée à l’apprenant après soumission',
   })
   @IsString()
   @IsOptional()
@@ -79,10 +86,14 @@ export class CreateAdminQuestionDto {
 
   @ApiProperty({
     type: [CreateAdminAnswerDto],
-    description: 'Liste des propositions de réponses (minimum 2 réponses dont au moins 1 exacte)',
+    description:
+      'Liste des propositions de réponses (minimum 2 réponses dont au moins 1 exacte)',
   })
   @IsArray({ message: 'Les réponses doivent être un tableau.' })
-  @ArrayMinSize(2, { message: 'Chaque question doit comporter au moins 2 propositions de réponse.' })
+  @ArrayMinSize(2, {
+    message:
+      'Chaque question doit comporter au moins 2 propositions de réponse.',
+  })
   @ValidateNested({ each: true })
   @Type(() => CreateAdminAnswerDto)
   answers: CreateAdminAnswerDto[];
@@ -98,7 +109,8 @@ export class CreateQuizDto {
   title: string;
 
   @ApiPropertyOptional({
-    example: 'Évaluez vos compétences sur la métaprogrammation et les décorateurs NestJS.',
+    example:
+      'Évaluez vos compétences sur la métaprogrammation et les décorateurs NestJS.',
     description: 'Description du quiz',
   })
   @IsString()
@@ -150,9 +162,12 @@ export class CreateQuizDto {
 
   @ApiProperty({
     type: [CreateAdminQuestionDto],
-    description: 'Liste des questions associées à ce quiz (au moins 1 question requise)',
+    description:
+      'Liste des questions associées à ce quiz (au moins 1 question requise)',
   })
-  @IsArray({ message: 'Les questions doivent être fournies sous forme de tableau.' })
+  @IsArray({
+    message: 'Les questions doivent être fournies sous forme de tableau.',
+  })
   @ArrayMinSize(1, { message: 'Le quiz doit comporter au moins 1 question.' })
   @ValidateNested({ each: true })
   @Type(() => CreateAdminQuestionDto)

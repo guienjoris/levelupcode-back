@@ -9,9 +9,12 @@ import { OAuthUser } from './google.strategy.js';
 export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
   constructor(configService: ConfigService) {
     super({
-      clientID: configService.get<string>('GITHUB_CLIENT_ID') || 'placeholder-github-client-id',
+      clientID:
+        configService.get<string>('GITHUB_CLIENT_ID') ||
+        'placeholder-github-client-id',
       clientSecret:
-        configService.get<string>('GITHUB_CLIENT_SECRET') || 'placeholder-github-client-secret',
+        configService.get<string>('GITHUB_CLIENT_SECRET') ||
+        'placeholder-github-client-secret',
       callbackURL:
         configService.get<string>('GITHUB_CALLBACK_URL') ||
         'http://localhost:3000/auth/github/callback',
@@ -38,7 +41,10 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
     const user: OAuthUser = {
       email,
       name: profile.displayName || profile.username,
-      avatarUrl: profile.photos && profile.photos[0] ? profile.photos[0].value : undefined,
+      avatarUrl:
+        profile.photos && profile.photos[0]
+          ? profile.photos[0].value
+          : undefined,
       provider: AuthProvider.GITHUB,
     };
     done(null, user);

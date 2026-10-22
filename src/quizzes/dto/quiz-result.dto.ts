@@ -11,11 +11,15 @@ export class QuestionCorrectionDto {
   @ApiProperty({ example: 'a1b2c3d4-0000-0000-0000-000000000001' })
   correctAnswerId: string;
 
-  @ApiProperty({ example: true, description: 'True si la réponse choisie est la bonne' })
+  @ApiProperty({
+    example: true,
+    description: 'True si la réponse choisie est la bonne',
+  })
   isCorrect: boolean;
 
   @ApiPropertyOptional({
-    example: 'Le décorateur @Module() permet d’enregistrer les métadonnées de structure...',
+    example:
+      'Le décorateur @Module() permet d’enregistrer les métadonnées de structure...',
     description: 'Explication pédagogique de la réponse',
   })
   explanation?: string | null;
@@ -25,10 +29,16 @@ export class QuizResultDto {
   @ApiProperty({ example: 'z1b2c3d4-0000-0000-0000-000000000001' })
   quizId: string;
 
-  @ApiProperty({ example: 100, description: 'Score obtenu en pourcentage (0 à 100)' })
+  @ApiProperty({
+    example: 100,
+    description: 'Score obtenu en pourcentage (0 à 100)',
+  })
   score: number;
 
-  @ApiProperty({ example: true, description: 'True si le score est supérieur ou égal à 70%' })
+  @ApiProperty({
+    example: true,
+    description: 'True si le score est supérieur ou égal à 70%',
+  })
   passed: boolean;
 
   @ApiProperty({ example: 2, description: 'Nombre total de questions' })

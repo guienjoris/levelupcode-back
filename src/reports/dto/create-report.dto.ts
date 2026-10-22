@@ -17,16 +17,21 @@ export class CreateReportDto {
     example: '550e8400-e29b-41d4-a716-446655440000',
     description: 'Identifiant UUID ou slug de la leçon ou du quiz signalé',
   })
-  @IsString({ message: 'L\'identifiant de la cible doit être une chaîne de caractères.' })
-  @IsNotEmpty({ message: 'L\'identifiant de la cible est obligatoire.' })
+  @IsString({
+    message: "L'identifiant de la cible doit être une chaîne de caractères.",
+  })
+  @IsNotEmpty({ message: "L'identifiant de la cible est obligatoire." })
   targetId: string;
 
   @ApiProperty({
-    example: 'Une erreur de syntaxe empêche l\'exemple de compiler à la ligne 12.',
-    description: 'Explication détaillée de l\'anomalie ou du problème rencontré',
+    example:
+      "Une erreur de syntaxe empêche l'exemple de compiler à la ligne 12.",
+    description: "Explication détaillée de l'anomalie ou du problème rencontré",
   })
   @IsString({ message: 'Le commentaire doit être une chaîne de caractères.' })
   @IsNotEmpty({ message: 'Le commentaire explicatif est obligatoire.' })
-  @MaxLength(2000, { message: 'Le commentaire ne peut pas dépasser 2000 caractères.' })
+  @MaxLength(2000, {
+    message: 'Le commentaire ne peut pas dépasser 2000 caractères.',
+  })
   comment: string;
 }

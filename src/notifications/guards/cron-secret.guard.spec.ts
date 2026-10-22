@@ -11,7 +11,9 @@ describe('CronSecretGuard', () => {
     get: vi.fn(),
   };
 
-  const createMockContext = (headers: Record<string, string>): ExecutionContext => {
+  const createMockContext = (
+    headers: Record<string, string>,
+  ): ExecutionContext => {
     return {
       switchToHttp: () => ({
         getRequest: () => ({ headers }),

@@ -37,11 +37,15 @@ export class BmcWebhookDto {
   message?: string;
 
   // Objet imbriqué (format BMC event data ou response)
-  @ApiPropertyOptional({ description: 'Payload imbriqué envoyé par Buy Me a Coffee' })
+  @ApiPropertyOptional({
+    description: 'Payload imbriqué envoyé par Buy Me a Coffee',
+  })
   @IsOptional()
   data?: Record<string, any>;
 
-  @ApiPropertyOptional({ description: 'Payload response envoyé par certains webhooks BMC' })
+  @ApiPropertyOptional({
+    description: 'Payload response envoyé par certains webhooks BMC',
+  })
   @IsOptional()
   response?: Record<string, any>;
 }

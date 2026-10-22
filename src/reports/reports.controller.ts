@@ -65,7 +65,8 @@ export class ReportsController {
   })
   @ApiResponse({
     status: 429,
-    description: 'Trop de requêtes : limite de 5 signalements atteinte pour cette période',
+    description:
+      'Trop de requêtes : limite de 5 signalements atteinte pour cette période',
   })
   async create(
     @Body() dto: CreateReportDto,

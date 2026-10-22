@@ -5,7 +5,10 @@ import {
   Logger,
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
-import { CreateQuizDto, CreateAdminQuestionDto } from './dto/create-quiz.dto.js';
+import {
+  CreateQuizDto,
+  CreateAdminQuestionDto,
+} from './dto/create-quiz.dto.js';
 import { UpdateQuizDto } from './dto/update-quiz.dto.js';
 
 @Injectable()
@@ -18,7 +21,9 @@ export class AdminQuizzesService {
     return this.prisma.quiz.findMany({
       where: {
         ...(params?.categoryId ? { categoryId: params.categoryId } : {}),
-        ...(params?.isPublished !== undefined ? { isPublished: params.isPublished } : {}),
+        ...(params?.isPublished !== undefined
+          ? { isPublished: params.isPublished }
+          : {}),
       },
       orderBy: [{ categoryId: 'asc' }, { orderIndex: 'asc' }],
       include: {
@@ -131,7 +136,9 @@ export class AdminQuizzesService {
       return quiz;
     });
 
-    this.logger.log(`Quiz créé par l'administrateur : ${createdQuiz.title} (${createdQuiz.id})`);
+    this.logger.log(
+      `Quiz créé par l'administrateur : ${createdQuiz.title} (${createdQuiz.id})`,
+    );
     return createdQuiz;
   }
 
@@ -148,7 +155,9 @@ export class AdminQuizzesService {
         where: { id: dto.categoryId },
       });
       if (!category) {
-        throw new NotFoundException(`Catégorie "${dto.categoryId}" introuvable.`);
+        throw new NotFoundException(
+          `Catégorie "${dto.categoryId}" introuvable.`,
+        );
       }
     }
 
@@ -165,12 +174,18 @@ export class AdminQuizzesService {
       where: { id },
       data: {
         ...(dto.title ? { title: dto.title.trim() } : {}),
-        ...(dto.description !== undefined ? { description: dto.description?.trim() || null } : {}),
+        ...(dto.description !== undefined
+          ? { description: dto.description?.trim() || null }
+          : {}),
         ...(dto.difficulty ? { difficulty: dto.difficulty } : {}),
         ...(dto.categoryId ? { categoryId: dto.categoryId } : {}),
-        ...(dto.lessonId !== undefined ? { lessonId: dto.lessonId || null } : {}),
+        ...(dto.lessonId !== undefined
+          ? { lessonId: dto.lessonId || null }
+          : {}),
         ...(dto.orderIndex !== undefined ? { orderIndex: dto.orderIndex } : {}),
-        ...(dto.isPublished !== undefined ? { isPublished: dto.isPublished } : {}),
+        ...(dto.isPublished !== undefined
+          ? { isPublished: dto.isPublished }
+          : {}),
       },
       include: {
         category: { select: { name: true } },
@@ -178,7 +193,9 @@ export class AdminQuizzesService {
       },
     });
 
-    this.logger.log(`Quiz mis à jour par l'administrateur : ${updated.title} (${updated.id})`);
+    this.logger.log(
+      `Quiz mis à jour par l'administrateur : ${updated.title} (${updated.id})`,
+    );
     return updated;
   }
 
@@ -194,10 +211,13 @@ export class AdminQuizzesService {
       where: { id },
     });
 
-    this.logger.log(`Quiz supprimé par l'administrateur : ${existing.title} (${id})`);
+    this.logger.log(
+      `Quiz supprimé par l'administrateur : ${existing.title} (${id})`,
+    );
     return {
       success: true,
-      message: 'Le quiz et l’ensemble de ses questions ont été supprimés avec succès.',
+      message:
+        'Le quiz et l’ensemble de ses questions ont été supprimés avec succès.',
     };
   }
 
@@ -211,7 +231,9 @@ export class AdminQuizzesService {
 
     const hasCorrect = dto.answers.some((a) => a.isCorrect === true);
     if (!hasCorrect) {
-      throw new BadRequestException('La question doit comporter au moins une réponse exacte (isCorrect=true).');
+      throw new BadRequestException(
+        'La question doit comporter au moins une réponse exacte (isCorrect=true).',
+      );
     }
 
     return this.prisma.question.create({

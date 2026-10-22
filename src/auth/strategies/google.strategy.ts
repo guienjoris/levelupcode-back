@@ -15,9 +15,12 @@ export interface OAuthUser {
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   constructor(configService: ConfigService) {
     super({
-      clientID: configService.get<string>('GOOGLE_CLIENT_ID') || 'placeholder-google-client-id',
+      clientID:
+        configService.get<string>('GOOGLE_CLIENT_ID') ||
+        'placeholder-google-client-id',
       clientSecret:
-        configService.get<string>('GOOGLE_CLIENT_SECRET') || 'placeholder-google-client-secret',
+        configService.get<string>('GOOGLE_CLIENT_SECRET') ||
+        'placeholder-google-client-secret',
       callbackURL:
         configService.get<string>('GOOGLE_CALLBACK_URL') ||
         'http://localhost:3000/auth/google/callback',

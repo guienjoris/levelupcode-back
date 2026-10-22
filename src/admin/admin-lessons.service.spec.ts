@@ -130,7 +130,9 @@ describe('AdminLessonsService', () => {
 
       const res = await service.remove('l-1');
       expect(res.success).toBe(true);
-      expect(mockPrisma.lesson.delete).toHaveBeenCalledWith({ where: { id: 'l-1' } });
+      expect(mockPrisma.lesson.delete).toHaveBeenCalledWith({
+        where: { id: 'l-1' },
+      });
     });
   });
 });

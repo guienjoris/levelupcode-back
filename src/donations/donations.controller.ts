@@ -33,11 +33,13 @@ export class DonationsController {
   @UseGuards(BmcWebhookGuard)
   @ApiHeader({
     name: 'x-bmc-secret',
-    description: 'Secret partagé Buy Me a Coffee (ou en-tête Authorization Bearer / x-bmc-signature)',
+    description:
+      'Secret partagé Buy Me a Coffee (ou en-tête Authorization Bearer / x-bmc-signature)',
     required: false,
   })
   @ApiOperation({
-    summary: 'Webhook Buy Me a Coffee (Attribution automatique du badge supporter)',
+    summary:
+      'Webhook Buy Me a Coffee (Attribution automatique du badge supporter)',
     description:
       'Reçoit les notifications d’achat de café / don, enregistre la transaction et active le statut isSupporter sur le compte apprenant correspondant.',
   })
@@ -57,7 +59,8 @@ export class DonationsController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth('JWT-auth')
   @ApiOperation({
-    summary: 'Consulter mon statut Supporter et mes contributions (Membre connecté)',
+    summary:
+      'Consulter mon statut Supporter et mes contributions (Membre connecté)',
     description:
       'Retourne l’historique des dons et l’état du badge Supporter pour le compte actuellement authentifié.',
   })

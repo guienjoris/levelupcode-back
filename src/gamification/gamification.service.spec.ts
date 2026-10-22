@@ -85,7 +85,9 @@ describe('GamificationService', () => {
     it('devrait lever NotFoundException si l’utilisateur n’existe pas', async () => {
       mockPrisma.user.findUnique.mockResolvedValue(null);
 
-      await expect(service.getUserStats('inconnu')).rejects.toThrow(NotFoundException);
+      await expect(service.getUserStats('inconnu')).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -110,7 +112,11 @@ describe('GamificationService', () => {
         },
       ]);
 
-      const result = await service.getLeaderboard({ limit: 10, offset: 0, sortBy: 'xp' });
+      const result = await service.getLeaderboard({
+        limit: 10,
+        offset: 0,
+        sortBy: 'xp',
+      });
 
       expect(result.total).toBe(2);
       expect(result.entries[0].userId).toBe('u-2'); // Bob premier (300 XP)
@@ -142,7 +148,11 @@ describe('GamificationService', () => {
         },
       ]);
 
-      const result = await service.getLeaderboard({ limit: 10, offset: 0, sortBy: 'streak' });
+      const result = await service.getLeaderboard({
+        limit: 10,
+        offset: 0,
+        sortBy: 'streak',
+      });
 
       expect(result.entries[0].userId).toBe('u-1'); // Alice première par longestStreak (20)
       expect(result.entries[0].longestStreak).toBe(20);

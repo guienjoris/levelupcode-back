@@ -36,7 +36,9 @@ export class AuthService {
     });
 
     if (existingUser) {
-      throw new ConflictException('Un compte existe déjà avec cette adresse email.');
+      throw new ConflictException(
+        'Un compte existe déjà avec cette adresse email.',
+      );
     }
 
     const passwordHash = await argon2.hash(dto.password);
@@ -74,10 +76,14 @@ export class AuthService {
         where: { supporterEmail: email },
         data: { userId: user.id },
       });
-      this.logger.log(`Dons antérieurs rattachés au compte ${user.email} (Statut Supporter accordé)`);
+      this.logger.log(
+        `Dons antérieurs rattachés au compte ${user.email} (Statut Supporter accordé)`,
+      );
     }
 
-    this.logger.log(`Nouvel utilisateur inscrit avec succès : ${user.email} (${user.id})`);
+    this.logger.log(
+      `Nouvel utilisateur inscrit avec succès : ${user.email} (${user.id})`,
+    );
     return this.generateTokens(user);
   }
 
@@ -93,7 +99,10 @@ export class AuthService {
       throw new UnauthorizedException('Identifiants de connexion invalides.');
     }
 
-    const isPasswordValid = await argon2.verify(user.passwordHash, dto.password);
+    const isPasswordValid = await argon2.verify(
+      user.passwordHash,
+      dto.password,
+    );
     if (!isPasswordValid) {
       throw new UnauthorizedException('Identifiants de connexion invalides.');
     }
@@ -108,9 +117,12 @@ export class AuthService {
         'super-secret-refresh-key',
       );
 
-      const payload = await this.jwtService.verifyAsync<JwtPayload>(refreshToken, {
-        secret: refreshSecret,
-      });
+      const payload = await this.jwtService.verifyAsync<JwtPayload>(
+        refreshToken,
+        {
+          secret: refreshSecret,
+        },
+      );
 
       const user = await this.prisma.user.findUnique({
         where: { id: payload.sub },
@@ -124,7 +136,9 @@ export class AuthService {
       const accessToken = await this.generateAccessToken(user);
       return { accessToken };
     } catch {
-      throw new UnauthorizedException('Jeton de rafraîchissement invalide ou expiré.');
+      throw new UnauthorizedException(
+        'Jeton de rafraîchissement invalide ou expiré.',
+      );
     }
   }
 
@@ -164,7 +178,9 @@ export class AuthService {
           provider: oAuthUser.provider,
           role: Role.USER,
           isSupporter: hasPriorDonations,
-          supporterSince: hasPriorDonations ? priorDonations[0].createdAt : null,
+          supporterSince: hasPriorDonations
+            ? priorDonations[0].createdAt
+            : null,
           streak: {
             create: {
               currentStreak: 0,
@@ -182,7 +198,9 @@ export class AuthService {
         });
       }
 
-      this.logger.log(`Nouvel utilisateur OAuth créé : ${user.email} (${oAuthUser.provider})`);
+      this.logger.log(
+        `Nouvel utilisateur OAuth créé : ${user.email} (${oAuthUser.provider})`,
+      );
     } else if (oAuthUser.avatarUrl && !user.avatarUrl) {
       user = await this.prisma.user.update({
         where: { id: user.id },
@@ -201,14 +219,23 @@ export class AuthService {
       role: user.role,
     };
 
-    const jwtSecret = this.configService.get<string>('JWT_SECRET', 'super-secret-jwt-key');
-    const jwtExpiresIn = this.configService.get<string>('JWT_EXPIRES_IN', '15m') as any;
+    const jwtSecret = this.configService.get<string>(
+      'JWT_SECRET',
+      'super-secret-jwt-key',
+    );
+    const jwtExpiresIn = this.configService.get<string>(
+      'JWT_EXPIRES_IN',
+      '15m',
+    ) as any;
 
     const refreshSecret = this.configService.get<string>(
       'JWT_REFRESH_SECRET',
       'super-secret-refresh-key',
     );
-    const refreshExpiresIn = this.configService.get<string>('JWT_REFRESH_EXPIRES_IN', '7d') as any;
+    const refreshExpiresIn = this.configService.get<string>(
+      'JWT_REFRESH_EXPIRES_IN',
+      '7d',
+    ) as any;
 
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(payload, {
@@ -228,15 +255,25 @@ export class AuthService {
     };
   }
 
-  private async generateAccessToken(user: { id: string; email: string; role: Role }): Promise<string> {
+  private async generateAccessToken(user: {
+    id: string;
+    email: string;
+    role: Role;
+  }): Promise<string> {
     const payload: JwtPayload = {
       sub: user.id,
       email: user.email,
       role: user.role,
     };
 
-    const jwtSecret = this.configService.get<string>('JWT_SECRET', 'super-secret-jwt-key');
-    const jwtExpiresIn = this.configService.get<string>('JWT_EXPIRES_IN', '15m') as any;
+    const jwtSecret = this.configService.get<string>(
+      'JWT_SECRET',
+      'super-secret-jwt-key',
+    );
+    const jwtExpiresIn = this.configService.get<string>(
+      'JWT_EXPIRES_IN',
+      '15m',
+    ) as any;
 
     return this.jwtService.signAsync(payload, {
       secret: jwtSecret,

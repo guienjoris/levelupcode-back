@@ -1,8 +1,16 @@
 import { Controller, Get, Query, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { GamificationService } from './gamification.service.js';
 import { UserStatsDto } from './dto/user-stats.dto.js';
-import { LeaderboardQueryDto, LeaderboardEntryDto } from './dto/leaderboard.dto.js';
+import {
+  LeaderboardQueryDto,
+  LeaderboardEntryDto,
+} from './dto/leaderboard.dto.js';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
 import { CurrentUser } from '../auth/decorators/current-user.decorator.js';
 
@@ -35,7 +43,8 @@ export class GamificationController {
   @Get('leaderboard')
   @ApiOperation({
     summary: 'Classement public des apprenants (Leaderboard)',
-    description: 'Retourne le classement par XP total ou par record de streak avec pagination.',
+    description:
+      'Retourne le classement par XP total ou par record de streak avec pagination.',
   })
   @ApiResponse({
     status: 200,

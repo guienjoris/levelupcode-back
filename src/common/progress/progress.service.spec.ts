@@ -78,7 +78,10 @@ describe('ProgressService', () => {
   });
 
   it('recordActivity ne devrait pas réattribuer d’XP si déjà complété', async () => {
-    mockPrisma.userProgress.findFirst.mockResolvedValue({ id: 'prog-1', score: 100 });
+    mockPrisma.userProgress.findFirst.mockResolvedValue({
+      id: 'prog-1',
+      score: 100,
+    });
     mockPrisma.userStreak.findUnique.mockResolvedValue({
       id: 'streak-1',
       userId: 'user-1',

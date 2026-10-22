@@ -16,7 +16,9 @@ export class QuizQuestionDto {
   @ApiProperty({ example: 'q1b2c3d4-0000-0000-0000-000000000001' })
   id: string;
 
-  @ApiProperty({ example: 'Quel décorateur est requis pour définir un module NestJS ?' })
+  @ApiProperty({
+    example: 'Quel décorateur est requis pour définir un module NestJS ?',
+  })
   title: string;
 
   @ApiPropertyOptional({ example: '@Injectable()\nexport class MyService {}' })
@@ -27,7 +29,8 @@ export class QuizQuestionDto {
 
   @ApiProperty({
     type: [QuizAnswerOptionDto],
-    description: 'Propositions de réponses (la bonne réponse est masquée avant soumission)',
+    description:
+      'Propositions de réponses (la bonne réponse est masquée avant soumission)',
   })
   answers: QuizAnswerOptionDto[];
 }
@@ -39,7 +42,9 @@ export class QuizDetailDto {
   @ApiProperty({ example: 'Quiz : Les fondamentaux des Modules NestJS' })
   title: string;
 
-  @ApiPropertyOptional({ example: 'Testez vos connaissances sur le décorateur @Module...' })
+  @ApiPropertyOptional({
+    example: 'Testez vos connaissances sur le décorateur @Module...',
+  })
   description?: string | null;
 
   @ApiProperty({ enum: Difficulty, example: Difficulty.NOVICE })
@@ -51,7 +56,10 @@ export class QuizDetailDto {
   @ApiPropertyOptional({ example: 'a1b2c3d4-e5f6-7890-1234-56789abcdef0' })
   lessonId?: string | null;
 
-  @ApiProperty({ example: 5, description: 'Nombre total de questions dans le quiz' })
+  @ApiProperty({
+    example: 5,
+    description: 'Nombre total de questions dans le quiz',
+  })
   questionsCount: number;
 
   @ApiProperty({ type: [QuizQuestionDto] })
@@ -59,7 +67,8 @@ export class QuizDetailDto {
 
   @ApiPropertyOptional({
     example: 80,
-    description: 'Meilleur score obtenu par l’utilisateur (en pourcentage) ou null',
+    description:
+      'Meilleur score obtenu par l’utilisateur (en pourcentage) ou null',
   })
   userBestScore?: number | null;
 }

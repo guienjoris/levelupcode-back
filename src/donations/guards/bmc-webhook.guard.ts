@@ -19,8 +19,12 @@ export class BmcWebhookGuard implements CanActivate {
     const expectedSecret = this.configService.get<string>('BMC_WEBHOOK_SECRET');
 
     if (!expectedSecret) {
-      this.logger.error('BMC_WEBHOOK_SECRET n\'est pas configuré sur le serveur.');
-      throw new UnauthorizedException('Configuration du webhook Buy Me a Coffee manquante sur le serveur.');
+      this.logger.error(
+        "BMC_WEBHOOK_SECRET n'est pas configuré sur le serveur.",
+      );
+      throw new UnauthorizedException(
+        'Configuration du webhook Buy Me a Coffee manquante sur le serveur.',
+      );
     }
 
     const headers = request.headers;
@@ -70,10 +74,15 @@ export class BmcWebhookGuard implements CanActivate {
           return true;
         }
       } catch (err) {
-        this.logger.warn('Erreur lors du calcul de la signature HMAC BMC:', err);
+        this.logger.warn(
+          'Erreur lors du calcul de la signature HMAC BMC:',
+          err,
+        );
       }
     }
 
-    throw new UnauthorizedException('Signature ou secret Buy Me a Coffee manquant ou invalide.');
+    throw new UnauthorizedException(
+      'Signature ou secret Buy Me a Coffee manquant ou invalide.',
+    );
   }
 }

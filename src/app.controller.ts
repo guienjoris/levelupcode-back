@@ -9,7 +9,11 @@ export class AppController {
 
   @Get()
   @ApiOperation({ summary: 'Vérification de statut du service API' })
-  @ApiResponse({ status: 200, description: 'Service opérationnel', type: String })
+  @ApiResponse({
+    status: 200,
+    description: 'Service opérationnel',
+    type: String,
+  })
   getHello(): string {
     return this.appService.getHello();
   }

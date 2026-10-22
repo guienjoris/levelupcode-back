@@ -38,7 +38,11 @@ export class LessonsController {
     description:
       'Retourne la liste des leçons publiées d’une catégorie avec l’état de complétion pour l’utilisateur connecté.',
   })
-  @ApiParam({ name: 'slug', example: 'nestjs', description: 'Slug de la catégorie' })
+  @ApiParam({
+    name: 'slug',
+    example: 'nestjs',
+    description: 'Slug de la catégorie',
+  })
   @ApiResponse({
     status: 200,
     description: 'Liste des leçons de la catégorie',

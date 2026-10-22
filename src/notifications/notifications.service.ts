@@ -1,4 +1,9 @@
-import { Injectable, Logger, BadRequestException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { MailService } from '../mail/mail.service.js';
@@ -60,7 +65,8 @@ export class NotificationsService {
       // Génération de l'URL de désinscription en 1 clic
       const unsubscribeToken = this.generateUnsubscribeToken(user.id);
       const apiUrl =
-        this.configService.get<string>('API_PUBLIC_URL') || 'http://localhost:3000';
+        this.configService.get<string>('API_PUBLIC_URL') ||
+        'http://localhost:3000';
       const unsubscribeUrl = `${apiUrl}/notifications/unsubscribe?token=${unsubscribeToken}`;
 
       const sent = await this.mailService.sendStreakReminder({
@@ -115,7 +121,9 @@ export class NotificationsService {
     };
   }
 
-  async unsubscribeByToken(token: string): Promise<{ success: boolean; message: string }> {
+  async unsubscribeByToken(
+    token: string,
+  ): Promise<{ success: boolean; message: string }> {
     try {
       const decoded = Buffer.from(token, 'base64').toString('utf-8');
       const [userId] = decoded.split(':');
@@ -131,10 +139,13 @@ export class NotificationsService {
 
       return {
         success: true,
-        message: 'Vous avez été désinscrit avec succès des rappels quotidiens par email.',
+        message:
+          'Vous avez été désinscrit avec succès des rappels quotidiens par email.',
       };
     } catch {
-      throw new BadRequestException('Jeton de désinscription expiré ou invalide.');
+      throw new BadRequestException(
+        'Jeton de désinscription expiré ou invalide.',
+      );
     }
   }
 

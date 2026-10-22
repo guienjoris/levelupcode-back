@@ -33,11 +33,13 @@ export class NotificationsController {
   @UseGuards(CronSecretGuard)
   @ApiHeader({
     name: 'x-cron-secret',
-    description: 'Secret d’autorisation partagé avec Cloud Scheduler (Bearer <token> ou valeur brute)',
+    description:
+      'Secret d’autorisation partagé avec Cloud Scheduler (Bearer <token> ou valeur brute)',
     required: true,
   })
   @ApiOperation({
-    summary: 'Déclencheur automatique des rappels de streak (Cloud Scheduler / Cron)',
+    summary:
+      'Déclencheur automatique des rappels de streak (Cloud Scheduler / Cron)',
     description:
       'Scanne les apprenants inactifs aujourd’hui et envoie les emails de relance pour préserver leur streak.',
   })
@@ -53,7 +55,10 @@ export class NotificationsController {
       },
     },
   })
-  @ApiResponse({ status: 401, description: 'Secret de cron manquant ou invalide' })
+  @ApiResponse({
+    status: 401,
+    description: 'Secret de cron manquant ou invalide',
+  })
   async sendDailyReminders() {
     return this.notificationsService.sendDailyReminders();
   }
@@ -63,7 +68,8 @@ export class NotificationsController {
   @ApiBearerAuth('JWT-auth')
   @ApiOperation({
     summary: 'Mise à jour des préférences de rappel email (Membres connectés)',
-    description: 'Active ou désactive la réception de l’email quotidien de rappel de streak.',
+    description:
+      'Active ou désactive la réception de l’email quotidien de rappel de streak.',
   })
   @ApiResponse({
     status: 200,
@@ -80,13 +86,17 @@ export class NotificationsController {
     @CurrentUser('id') userId: string,
     @Body() dto: UpdateNotificationPreferencesDto,
   ) {
-    return this.notificationsService.updatePreferences(userId, dto.emailDailyReminder);
+    return this.notificationsService.updatePreferences(
+      userId,
+      dto.emailDailyReminder,
+    );
   }
 
   @Get('unsubscribe')
   @ApiOperation({
     summary: 'Désinscription en 1 clic des rappels quotidiens',
-    description: 'Permet à un utilisateur de se désinscrire directement depuis le lien présent dans l’email reçu.',
+    description:
+      'Permet à un utilisateur de se désinscrire directement depuis le lien présent dans l’email reçu.',
   })
   @ApiQuery({ name: 'token', description: 'Jeton de désinscription chiffré' })
   @ApiResponse({ status: 200, description: 'Désinscription confirmée' })

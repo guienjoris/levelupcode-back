@@ -164,11 +164,20 @@ export class ProgressService {
     }
 
     // Comparaison des dates (en jours calendaires UTC)
-    const lastDateMidnight = new Date(Date.UTC(lastActive.getUTCFullYear(), lastActive.getUTCMonth(), lastActive.getUTCDate()));
-    const nowDateMidnight = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+    const lastDateMidnight = new Date(
+      Date.UTC(
+        lastActive.getUTCFullYear(),
+        lastActive.getUTCMonth(),
+        lastActive.getUTCDate(),
+      ),
+    );
+    const nowDateMidnight = new Date(
+      Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()),
+    );
 
     const diffDays = Math.round(
-      (nowDateMidnight.getTime() - lastDateMidnight.getTime()) / (1000 * 60 * 60 * 24),
+      (nowDateMidnight.getTime() - lastDateMidnight.getTime()) /
+        (1000 * 60 * 60 * 24),
     );
 
     if (diffDays === 0) {

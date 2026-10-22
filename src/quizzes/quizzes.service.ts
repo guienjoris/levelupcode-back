@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { ProgressService } from '../common/progress/progress.service.js';
 import { QuizDetailDto } from './dto/quiz-response.dto.js';
@@ -45,7 +49,9 @@ export class QuizzesService {
     }
 
     const bestScore =
-      quiz.progress.length > 0 ? Math.max(...quiz.progress.map((p) => p.score ?? 0)) : null;
+      quiz.progress.length > 0
+        ? Math.max(...quiz.progress.map((p) => p.score ?? 0))
+        : null;
 
     return {
       id: quiz.id,
@@ -103,7 +109,9 @@ export class QuizzesService {
     for (const question of quiz.questions) {
       const selectedAnswerId = userAnswersMap.get(question.id) || '';
       const correctAnswer = question.answers.find((a) => a.isCorrect);
-      const isCorrect = correctAnswer ? selectedAnswerId === correctAnswer.id : false;
+      const isCorrect = correctAnswer
+        ? selectedAnswerId === correctAnswer.id
+        : false;
 
       if (isCorrect) {
         correctCount += 1;

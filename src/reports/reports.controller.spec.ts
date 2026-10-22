@@ -18,9 +18,7 @@ describe('ReportsController', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       controllers: [ReportsController],
-      providers: [
-        { provide: ReportsService, useValue: mockReportsService },
-      ],
+      providers: [{ provide: ReportsService, useValue: mockReportsService }],
     })
       .overrideGuard(ThrottlerGuard)
       .useValue({ canActivate: () => true })
@@ -40,7 +38,11 @@ describe('ReportsController', () => {
       targetId: 'lesson-123',
       comment: 'Anomalie détectée dans le cours',
     };
-    const user = { id: 'u-1', email: 'test@example.com', role: 'USER' as const };
+    const user = {
+      id: 'u-1',
+      email: 'test@example.com',
+      role: 'USER' as const,
+    };
 
     mockReportsService.create.mockResolvedValue({
       success: true,

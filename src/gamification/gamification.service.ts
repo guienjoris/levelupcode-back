@@ -1,7 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { UserStatsDto } from './dto/user-stats.dto.js';
-import { LeaderboardQueryDto, LeaderboardEntryDto } from './dto/leaderboard.dto.js';
+import {
+  LeaderboardQueryDto,
+  LeaderboardEntryDto,
+} from './dto/leaderboard.dto.js';
 
 @Injectable()
 export class GamificationService {
@@ -30,14 +33,23 @@ export class GamificationService {
 
     // Calcul de l'ancienneté en jours
     const diffMs = Date.now() - user.createdAt.getTime();
-    const daysSinceRegistration = Math.max(1, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
+    const daysSinceRegistration = Math.max(
+      1,
+      Math.floor(diffMs / (1000 * 60 * 60 * 24)),
+    );
 
     // Compteurs de leçons et quiz complétés
-    const completedLessonsCount = user.progress.filter((p) => p.lessonId !== null).length;
-    const completedQuizzesCount = user.progress.filter((p) => p.quizId !== null).length;
+    const completedLessonsCount = user.progress.filter(
+      (p) => p.lessonId !== null,
+    ).length;
+    const completedQuizzesCount = user.progress.filter(
+      (p) => p.quizId !== null,
+    ).length;
 
     // Répartition de l'XP par catégorie
-    const categoryScores = user.scores.filter((s) => s.categoryId && s.category);
+    const categoryScores = user.scores.filter(
+      (s) => s.categoryId && s.category,
+    );
     const xpByCategory = categoryScores.map((s) => ({
       categoryId: s.category!.id,
       categoryName: s.category!.name,
@@ -72,7 +84,9 @@ export class GamificationService {
     };
   }
 
-  async getLeaderboard(query: LeaderboardQueryDto): Promise<{ total: number; entries: LeaderboardEntryDto[] }> {
+  async getLeaderboard(
+    query: LeaderboardQueryDto,
+  ): Promise<{ total: number; entries: LeaderboardEntryDto[] }> {
     const limit = query.limit ?? 20;
     const offset = query.offset ?? 0;
     const sortBy = query.sortBy ?? 'xp';
@@ -103,9 +117,13 @@ export class GamificationService {
     });
 
     if (sortBy === 'streak') {
-      userStats.sort((a, b) => b.longestStreak - a.longestStreak || b.totalXp - a.totalXp);
+      userStats.sort(
+        (a, b) => b.longestStreak - a.longestStreak || b.totalXp - a.totalXp,
+      );
     } else {
-      userStats.sort((a, b) => b.totalXp - a.totalXp || b.longestStreak - a.longestStreak);
+      userStats.sort(
+        (a, b) => b.totalXp - a.totalXp || b.longestStreak - a.longestStreak,
+      );
     }
 
     const total = userStats.length;

@@ -58,7 +58,10 @@ describe('NotificationsController', () => {
       emailDailyReminder: true,
     });
     expect(result.emailDailyReminder).toBe(true);
-    expect(mockNotificationsService.updatePreferences).toHaveBeenCalledWith('user-1', true);
+    expect(mockNotificationsService.updatePreferences).toHaveBeenCalledWith(
+      'user-1',
+      true,
+    );
   });
 
   it('devrait désinscrire via le jeton de désinscription', async () => {
@@ -69,6 +72,8 @@ describe('NotificationsController', () => {
 
     const result = await controller.unsubscribe('sample-token');
     expect(result.success).toBe(true);
-    expect(mockNotificationsService.unsubscribeByToken).toHaveBeenCalledWith('sample-token');
+    expect(mockNotificationsService.unsubscribeByToken).toHaveBeenCalledWith(
+      'sample-token',
+    );
   });
 });

@@ -32,14 +32,22 @@ describe('RolesGuard', () => {
 
   it('devrait autoriser l’accès si l’utilisateur possède le rôle requis', () => {
     vi.spyOn(reflector, 'getAllAndOverride').mockReturnValue([Role.ADMIN]);
-    const context = createMockContext({ id: '1', email: 'admin@test.com', role: Role.ADMIN });
+    const context = createMockContext({
+      id: '1',
+      email: 'admin@test.com',
+      role: Role.ADMIN,
+    });
 
     expect(guard.canActivate(context)).toBe(true);
   });
 
   it('devrait refuser l’accès si l’utilisateur a un rôle insuffisant', () => {
     vi.spyOn(reflector, 'getAllAndOverride').mockReturnValue([Role.ADMIN]);
-    const context = createMockContext({ id: '2', email: 'user@test.com', role: Role.USER });
+    const context = createMockContext({
+      id: '2',
+      email: 'user@test.com',
+      role: Role.USER,
+    });
 
     expect(() => guard.canActivate(context)).toThrow(ForbiddenException);
   });

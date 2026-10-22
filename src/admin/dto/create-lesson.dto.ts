@@ -29,7 +29,8 @@ export class CreateLessonDto {
   title: string;
 
   @ApiPropertyOptional({
-    example: 'Découvrez le fonctionnement interne des décorateurs et du métaprogramming...',
+    example:
+      'Découvrez le fonctionnement interne des décorateurs et du métaprogramming...',
     description: 'Courte description résumant les objectifs de la leçon',
   })
   @IsString()
@@ -37,10 +38,13 @@ export class CreateLessonDto {
   description?: string;
 
   @ApiProperty({
-    example: '# Les Décorateurs\n\nUn décorateur est une fonction qui applique le patron décorateur...',
+    example:
+      '# Les Décorateurs\n\nUn décorateur est une fonction qui applique le patron décorateur...',
     description: 'Contenu complet de la leçon au format Markdown',
   })
-  @IsString({ message: 'Le contenu Markdown doit être une chaîne de caractères.' })
+  @IsString({
+    message: 'Le contenu Markdown doit être une chaîne de caractères.',
+  })
   @IsNotEmpty({ message: 'Le contenu Markdown est obligatoire.' })
   contentMarkdown: string;
 

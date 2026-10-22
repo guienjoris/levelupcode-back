@@ -118,7 +118,9 @@ describe('NotificationsService', () => {
       expect(mockPrisma.user.update).toHaveBeenCalledWith(
         expect.objectContaining({
           where: { id: 'u-inactive' },
-          data: expect.objectContaining({ lastReminderEmailSentAt: expect.any(Date) }),
+          data: expect.objectContaining({
+            lastReminderEmailSentAt: expect.any(Date),
+          }),
         }),
       );
     });
@@ -126,7 +128,10 @@ describe('NotificationsService', () => {
 
   describe('updatePreferences', () => {
     it('devrait mettre à jour le statut des préférences de rappel', async () => {
-      mockPrisma.user.findUnique.mockResolvedValue({ id: 'u-1', email: 'u1@example.com' });
+      mockPrisma.user.findUnique.mockResolvedValue({
+        id: 'u-1',
+        email: 'u1@example.com',
+      });
       mockPrisma.user.update.mockResolvedValue({ emailDailyReminder: false });
 
       const result = await service.updatePreferences('u-1', false);
@@ -142,9 +147,9 @@ describe('NotificationsService', () => {
     it('devrait lever une NotFoundException si l’utilisateur n’existe pas', async () => {
       mockPrisma.user.findUnique.mockResolvedValue(null);
 
-      await expect(service.updatePreferences('unknown-id', true)).rejects.toThrow(
-        NotFoundException,
-      );
+      await expect(
+        service.updatePreferences('unknown-id', true),
+      ).rejects.toThrow(NotFoundException);
     });
   });
 

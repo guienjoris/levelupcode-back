@@ -74,6 +74,8 @@ describe('CategoriesService', () => {
   it('findBySlug devrait lever NotFoundException si la catégorie n’existe pas', async () => {
     mockPrisma.category.findUnique.mockResolvedValue(null);
 
-    await expect(service.findBySlug('inconnue')).rejects.toThrow(NotFoundException);
+    await expect(service.findBySlug('inconnue')).rejects.toThrow(
+      NotFoundException,
+    );
   });
 });

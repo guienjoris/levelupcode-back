@@ -26,17 +26,25 @@ export class MailService {
   constructor(private readonly configService: ConfigService) {
     const apiKey = this.configService.get<string>('RESEND_API_KEY');
     this.fromEmail =
-      this.configService.get<string>('MAIL_FROM') || 'LevelUpCode <onboarding@resend.dev>';
+      this.configService.get<string>('MAIL_FROM') ||
+      'LevelUpCode <onboarding@resend.dev>';
 
     if (apiKey && apiKey.startsWith('re_')) {
       this.resend = new Resend(apiKey);
       this.logger.log('Client Resend initialisé avec succès');
     } else {
-      this.logger.warn('Aucune clé RESEND_API_KEY valide configurée. Les emails seront simulés en console.');
+      this.logger.warn(
+        'Aucune clé RESEND_API_KEY valide configurée. Les emails seront simulés en console.',
+      );
     }
   }
 
-  async sendEmail(options: { to: string; subject: string; html: string; text?: string }): Promise<boolean> {
+  async sendEmail(options: {
+    to: string;
+    subject: string;
+    html: string;
+    text?: string;
+  }): Promise<boolean> {
     const { to, subject, html, text } = options;
 
     if (!this.resend) {
@@ -54,11 +62,16 @@ export class MailService {
       });
 
       if (response.error) {
-        this.logger.error(`Erreur retournée par Resend lors de l'envoi à ${to} :`, response.error);
+        this.logger.error(
+          `Erreur retournée par Resend lors de l'envoi à ${to} :`,
+          response.error,
+        );
         return false;
       }
 
-      this.logger.log(`Email envoyé avec succès à ${to} (ID: ${response.data?.id})`);
+      this.logger.log(
+        `Email envoyé avec succès à ${to} (ID: ${response.data?.id})`,
+      );
       return true;
     } catch (error) {
       this.logger.error(`Échec de l'envoi de l'email à ${to} :`, error);
@@ -141,7 +154,9 @@ export class MailService {
     return this.sendEmail({ to, subject, html });
   }
 
-  async sendAdminErrorReport(params: SendAdminErrorReportParams): Promise<boolean> {
+  async sendAdminErrorReport(
+    params: SendAdminErrorReportParams,
+  ): Promise<boolean> {
     const { type, targetId, comment, userEmail, date } = params;
     const adminEmail =
       this.configService.get<string>('ADMIN_EMAIL') || 'admin@levelupcode.dev';

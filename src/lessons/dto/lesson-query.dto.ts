@@ -5,7 +5,8 @@ import { Difficulty } from '@prisma/client';
 export class LessonQueryDto {
   @ApiPropertyOptional({
     enum: Difficulty,
-    description: 'Filtrer les leçons par niveau de difficulté (NOVICE, INTERMEDIAIRE, SENIOR)',
+    description:
+      'Filtrer les leçons par niveau de difficulté (NOVICE, INTERMEDIAIRE, SENIOR)',
   })
   @IsEnum(Difficulty)
   @IsOptional()

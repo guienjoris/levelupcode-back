@@ -1,5 +1,12 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 export class RegisterDto {
   @ApiProperty({
@@ -17,8 +24,12 @@ export class RegisterDto {
     maxLength: 64,
   })
   @IsString({ message: 'Le mot de passe doit être une chaîne de caractères.' })
-  @MinLength(8, { message: 'Le mot de passe doit contenir au moins 8 caractères.' })
-  @MaxLength(64, { message: 'Le mot de passe ne peut pas dépasser 64 caractères.' })
+  @MinLength(8, {
+    message: 'Le mot de passe doit contenir au moins 8 caractères.',
+  })
+  @MaxLength(64, {
+    message: 'Le mot de passe ne peut pas dépasser 64 caractères.',
+  })
   password: string;
 
   @ApiPropertyOptional({

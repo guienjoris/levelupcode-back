@@ -1,6 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConflictException, UnauthorizedException, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  UnauthorizedException,
+  NotFoundException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { Role, AuthProvider } from '@prisma/client';
@@ -190,7 +194,9 @@ describe('AuthService', () => {
     it('devrait lever une NotFoundException si l’utilisateur est introuvable', async () => {
       mockPrisma.user.findUnique.mockResolvedValue(null);
 
-      await expect(service.getMe('unknown-id')).rejects.toThrow(NotFoundException);
+      await expect(service.getMe('unknown-id')).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 });

@@ -15,7 +15,9 @@ export class DonationsService {
    */
   async handleBmcWebhook(payload: BmcWebhookDto) {
     // Normalisation des données depuis payload racine, data ou response
-    const data: Record<string, any> = (payload.data || payload.response || payload) as Record<string, any>;
+    const data: Record<string, any> = (payload.data ||
+      payload.response ||
+      payload) as Record<string, any>;
     const p = payload as any;
 
     const rawTransactionId =
@@ -44,26 +46,16 @@ export class DonationsService {
     const supporterName = String(rawName).trim();
 
     const rawAmount =
-      data.support_amount ||
-      data.amount ||
-      p.amount ||
-      p.support_amount ||
-      5.0;
-    const amount = typeof rawAmount === 'number' ? rawAmount : parseFloat(rawAmount) || 5.0;
+      data.support_amount || data.amount || p.amount || p.support_amount || 5.0;
+    const amount =
+      typeof rawAmount === 'number' ? rawAmount : parseFloat(rawAmount) || 5.0;
 
     const rawCurrency =
-      data.support_currency ||
-      data.currency ||
-      p.currency ||
-      'EUR';
+      data.support_currency || data.currency || p.currency || 'EUR';
     const currency = String(rawCurrency).toUpperCase();
 
     const rawMessage =
-      data.support_note ||
-      data.message ||
-      p.message ||
-      p.support_note ||
-      null;
+      data.support_note || data.message || p.message || p.support_note || null;
     const message = rawMessage ? String(rawMessage).trim() : null;
 
     // 1. Contrôle d'idempotence
@@ -77,7 +69,9 @@ export class DonationsService {
     });
 
     if (existing) {
-      this.logger.log(`Webhook BMC ignoré : transaction ${bmcTransactionId} déjà traitée.`);
+      this.logger.log(
+        `Webhook BMC ignoré : transaction ${bmcTransactionId} déjà traitée.`,
+      );
       return {
         success: true,
         message: 'Donation déjà enregistrée (idempotence respectée).',

@@ -233,7 +233,9 @@ describe('ReportsService', () => {
     it('devrait lever NotFoundException si le signalement n’existe pas', async () => {
       mockPrisma.contentReport.findUnique.mockResolvedValue(null);
 
-      await expect(service.findOne('rep-404')).rejects.toThrow(NotFoundException);
+      await expect(service.findOne('rep-404')).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -270,7 +272,9 @@ describe('ReportsService', () => {
     it('devrait lever NotFoundException si le signalement n’existe pas lors de la suppression', async () => {
       mockPrisma.contentReport.findUnique.mockResolvedValue(null);
 
-      await expect(service.delete('rep-404')).rejects.toThrow(NotFoundException);
+      await expect(service.delete('rep-404')).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 });
