@@ -134,7 +134,7 @@ export class AuthController {
     @Res() res: Response,
   ): Promise<void> {
     const authData = await this.authService.handleOAuthLogin(req.user);
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:4200';
+    const frontendUrl = process.env.FRONT_END_URL || 'http://localhost:4200';
 
     // Redirection vers le front avec les tokens dans l'URL
     return res.redirect(
@@ -157,7 +157,7 @@ export class AuthController {
     @Res() res: Response,
   ) {
     const authData = await this.authService.handleOAuthLogin(req.user);
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:4200';
+    const frontendUrl = process.env.FRONT_END_URL || 'http://localhost:4200';
 
     return res.redirect(
       `${frontendUrl}/login?accessToken=${authData.accessToken}&refreshToken=${authData.refreshToken}`,
